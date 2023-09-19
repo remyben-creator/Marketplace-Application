@@ -14,4 +14,4 @@ The target audience for the Vassar Marketplace app is the Vassar student body
 Vassar Marketplace saves Vassar students time and money by allowing users to buy and sell extra textbooks and
 dorm room items instead of buying them retail or throwing them away.  
 
-#
+# Main Features and Constraints
