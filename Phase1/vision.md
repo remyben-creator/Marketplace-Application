@@ -15,3 +15,17 @@ Vassar Marketplace saves Vassar students time and money by allowing users to buy
 dorm room items instead of buying them retail or throwing them away.  
 
 # Main Features and Constraints
+
+
+### Main Features:
+- Ability to post extra items you brought to school or past textbooks
+- Freedom to choose preferred method of communication
+- Ability to search for wanted dorm room items or textbooks for upcoming 
+classes
+- Once you find an item you want, you will be given their contact 
+information 
+
+### Constraints:
+- Not able to message the seller directly through the Marketplace : 
+must communicate with the seller through provided contact information 
+- Sellers must remove the listing from the website once it's sold
