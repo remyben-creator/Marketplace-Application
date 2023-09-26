@@ -14,6 +14,7 @@ The target audience for the Vassar Marketplace app is the Vassar student body
 Vassar Marketplace saves Vassar students time and money by allowing users to buy and sell extra textbooks and
 dorm room items instead of buying them retail or throwing them away.  
 
+<<<<<<< HEAD
 # Actors and Goals
 Customer: 
 open the app
@@ -28,3 +29,17 @@ post an item
 edit their items
 receive messages from buyer
 take down items/mark them as sold
+=======
+
+@startuml
+hide circle
+hide empty methods
+
+' classes 
+class Customer {
+}
+'
+
+@enduml
+# Main Features and Constraints
+>>>>>>> origin/main
