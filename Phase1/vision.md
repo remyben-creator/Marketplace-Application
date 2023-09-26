@@ -10,6 +10,7 @@
 # Target Audience
 The target audience for the Vassar Marketplace app is the Vassar student body
 
+
 # Value Proposition
 Vassar Marketplace saves Vassar students time and money by allowing users to buy and sell extra textbooks and
 dorm room items instead of buying them retail or throwing them away.  
@@ -33,7 +34,7 @@ must communicate with the seller through provided contact information
 
 # Use Case
 
-##  Primary actor and goals:
+###  Primary actor and goals:
 - Vassar students who want to buy goods on the marketplace.  To do so, they would like an easy search process and the
   ability to contact sellers
 
@@ -41,9 +42,9 @@ must communicate with the seller through provided contact information
 - **Seller:** Wants to easily post goods they're interested in selling and to be contacted once someone shows interest.  Also wants
   to easily remove an item posted once it's sold
 
-## Preconditions:
+### Preconditions:
 - All customers and sellers have created an account with their Vassar email address with synced vassar one login
 
-## Postconditions:
+### Postconditions:
 - Buyer is provided seller's email to contact them
 - System takes item down once seller says item is sold
