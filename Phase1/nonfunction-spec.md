@@ -15,8 +15,7 @@ readably
 - Possibility of accounts being able to be taken down or reset
 
 ## Implementation
-
-
+- None
 ## Interface
 ### Seller interface
 - "Put item up for sale" button
