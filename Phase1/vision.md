@@ -15,9 +15,8 @@ The target audience for the Vassar Marketplace app is the Vassar student body
 Vassar Marketplace saves Vassar students time and money by allowing users to buy and sell extra textbooks and
 dorm room items instead of buying them retail or throwing them away.  
 
-# Main Features and Constraints
 
-
+# Main Features and Constraints:
 ### Main Features:
 - Ability to post extra items you brought to school or past textbooks
 - Freedom to choose preferred method of communication
@@ -31,6 +30,20 @@ information
 must communicate with the seller through provided contact information 
 - Sellers must remove the listing from the website once it's sold
 
+# Actors and Goals
+Customer:
+- open the app
+- browse items available
+- search items
+- pick item
+- purchase item
+- get in contact with seller
+
+Seller:
+- post an item
+- edit their items
+- receive messages from buyer
+- take down items/mark them as sold
 
 # Use Case
 
@@ -48,3 +61,38 @@ must communicate with the seller through provided contact information
 ### Postconditions:
 - Buyer is provided seller's email to contact them
 - System takes item down once seller says item is sold
+
+```plantuml
+
+|Seller|
+start
+:Make account;
+:Put item up for sale;
+|System|
+:Validate item;
+|Seller|
+if (Still selling) then (Item no longer for sale)
+:Take down item or mark as sold;
+|System|
+:Unlist item;
+stop
+else
+|System|
+:List item and display in app;
+|Customer|
+:Make account;
+:View items;
+:Choose item;
+|System|
+:Put buyer in contact with seller;
+|Customer|
+:Communicate with seller;
+|Seller|
+:Finalize sale;
+:Take down item or mark as sold;
+|System| 
+:Unlist item;
+stop
+
+@enduml
+```
