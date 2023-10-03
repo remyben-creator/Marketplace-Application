@@ -1,3 +1,5 @@
+### Depth
+- In depth
 ###  Primary actor and goals:
 - Users on the marketplace looking to sell items.  They want an easy posting process, so it's worth it to try and sell 
 their good
@@ -14,32 +16,20 @@ their good
 
 |User|
 start
-:Selects post item option;
+:Has an item they would like to sell;
+while (item-complete-and-valid) is (no)
 |System|
-:Ask for item name;
+if (item-invalid?) then (yes)
+:Display "Item could not be posted due to explicit content, please try again";
+else (no)
+:Displays new item form;
 |User|
-:Inputs item name;
+:Inputs item name, selects category, inputs description, price, pictures;
+endif
+endwhile (yes) 
 |System|
-:Asks for item pictures;
-:Displays a dropbox for users to provide up to 3 pictures;
-|User|
-:Uploads pictures of items;
-|System|
-:Asks for item description;
-|User|
-:Inputs item description;
-|System| 
-:Asks for price;
-|User|
-:Inputs price;
-|System|
-:Validates item checking for banned words;
-if (item-invalid?) then (item is invalid)
-:Display "item could not be posted due to explicit content, please try again";
-stop
-else
 :Display "Item has been successfully posted";
-:List Item on database;
-Stop
+:Lists Item on database;
+stop
 @enduml
 ```

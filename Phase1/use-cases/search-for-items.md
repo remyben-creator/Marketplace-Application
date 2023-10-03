@@ -1,3 +1,5 @@
+### Depth
+- Casual
 ###  Primary actor and goals:
 - Users on the marketplace looking to buy items 
 ### Other stakeholders and interests:
@@ -14,11 +16,7 @@ goods to show up when searched for
 
 |User|
 start
-:Clicks on search bar;
-|System|
-:Displays a virtual keyboard;
-|User|
-:Types what they are looking for and presses search;
+:Searches for an item on the Marketplace;
 |System|
 :Compares user's string input and matches with list of items;
 :Saves the similar items and displays them to the user;

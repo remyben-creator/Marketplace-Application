@@ -28,17 +28,16 @@ on what we are learning as a class
 
 # Actors and Goals
 Customer:
-- open the app
-- browse items available
-- search items
+- browse available items
+- search for specific items they are interested in
 - pick item
-- purchase item
-- get in contact with seller
+- get in contact with seller to negotiate 
 
 Seller:
 - post an item
 - edit their items
 - receive messages from buyer
+- get in contact with buyer to negotiate price
 - take down items/mark them as sold
 
 # Use Case
@@ -145,7 +144,6 @@ if (Still selling) then (Item no longer for sale)
 :Take down item or mark as sold;
 |System|
 :Unlist item;
-stop
 else
 |System|
 :List item and display in app;
