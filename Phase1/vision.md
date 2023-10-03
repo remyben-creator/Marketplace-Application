@@ -59,6 +59,80 @@ Seller:
 - System takes item down once seller says item is sold
 
 ```plantuml
+@startuml
+actor "Buyer" as buyer 
+actor "Seller" as seller
+
+actor "System" <<system>> as system
+
+package "make-account" {
+usecase "Select sign-up option" as makeAccount1
+usecase "Inputs email" as makeAccount2
+}
+
+buyer --> makeAccount1
+seller --> makeAccount1
+makeAccount1 --> makeAccount2
+makeAccount2 --> system
+
+package "post-item" {
+usecase "Select post item option" as postItem1
+usecase "Fills out item post" as postItem2
+}
+
+seller --> postItem1
+postItem1 --> postItem2
+postItem2 --> system
+
+package "search-for-items" {
+usecase "Clicks on searchbar" as searchItem1
+usecase "Inputs item name" as searchItem2
+}
+
+buyer --> searchItem1
+searchItem1 --> searchItem2
+searchItem2 --> system
+
+package "complete-sale" {
+usecase "Contact other party" as completeSale1
+usecase "Finalize sale" as completeSale2
+}
+
+buyer --> completeSale1
+seller --> completeSale1
+completeSale1 --> completeSale2
+completeSale2 --> system
+
+package "edit-item" {
+usecase "edit item/delete item" as editItem
+}
+
+seller --> editItem
+editItem --> system
+
+package "validate-item" {
+usecase "validate item" as validateItem
+}
+
+system --> validateItem
+
+package "compute-user-process" {
+usecase "compute and follow through with user input" as computeProcess1
+usecase "edit/delete item" as computeProcess2
+usecase "complete sale" as computeProcess3
+usecase "show search results" as computeProcess4
+usecase "finalize user account" as computeProcess5
+}
+
+system --> computeProcess1
+system --> computeProcess2
+system --> computeProcess3
+system --> computeProcess4
+system --> computeProcess5
+@enduml
+```
+```plantuml
+@startuml
 
 |Seller|
 start
