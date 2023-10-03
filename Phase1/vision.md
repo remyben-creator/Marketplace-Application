@@ -20,6 +20,11 @@ information
 - Not able to message the seller directly through the Marketplace : 
 must communicate with the seller through provided contact information 
 - Sellers must remove the listing from the website once it's sold
+- Implementation constraints:
+  - from CMPU-102 we have learned java, and therefore within CMPU-203
+there is a requirement for the product to be written in java
+  - there is a requirement for the product to be an Android Application, based
+on what we are learning as a class
 
 # Actors and Goals
 Customer:
