@@ -7,7 +7,7 @@ readably
 ## Performance
 - Instant boot up time
 - Ability to seamlessly scroll and search for items
-- Instant listing and unlisting of items
+- Instant listing and un-listing of items
 
 ## Supportability
 - System validates item by checking if it is appropriate
@@ -15,16 +15,16 @@ readably
 - Possibility of accounts being able to be taken down or reset
 
 ## Implementation
-- None
+- Constraints:
+  - program to be written in java
+  - product to be an android application
 ## Interface
 ### Seller interface
-- "Put item up for sale" button
-- Interface that allows for pictures and descriptions 
-to be input
-### Buyer Interface
-- A scrollable interface for buyers to easily view 
-all products for sale on the app.
-- A search bar for finding items by name
+- deals with the vassar.edu onelogin system, 
+for validation of Vassar Student status
+- deals with the vassar.edu e-mail system,
+for communication within the app
+(may not be specifically vassar.edu, or instead just e-mail itself)
 
 ## Legal
 Vassar Marketplace assumes zero responsibility 
