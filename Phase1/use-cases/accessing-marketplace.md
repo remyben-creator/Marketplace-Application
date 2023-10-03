@@ -1,6 +1,7 @@
+### Depth
+- In depth
 ###  Primary actor and goals:
 - Vassar students looking to use the marketplace. They would like to create an account to search for / post items.
-
 ### Other stakeholders and interests:
 - **Existing Users:** Would like more people utilizing the marketplace to increase both supply and demand
 ### Preconditions:
@@ -13,17 +14,18 @@
 
 |User|
 start
-:Select sign up option;
+:Accesses the Marketplace;
+:IMPLEMENT LATER;
 |System|
 :Ask for email;
 |User|
 :Inputs email;
 |System|
 :Validate email;
-if (email invalid?) then (email invalid)
+if (email-invalid?) then (yes)
 :display "email could not be authenticated, please try again";
 stop
-else 
+else  (no)
 |System|
 :Display "Email has been successfully verified!";
 :Prompt for password creation; 
