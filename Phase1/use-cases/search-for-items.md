@@ -19,7 +19,7 @@ start
 :Searches for an item on the Marketplace;
 |System|
 :Compares user's string input and matches with list of items;
-:Saves the similar items and displays them to the user;
+:Displays the similar items to the user;
 stop
 @enduml
 ```
