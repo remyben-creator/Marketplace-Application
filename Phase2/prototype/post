@@ -1,0 +1,10 @@
+public class Post {
+    public String title;
+    public String description;
+    public double price;
+    // public ??? pictures;
+    public User seller;
+    // Define methods for posts
+    // make posts a class
+
+}
