@@ -1,3 +1,23 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class model {
+    private List<Post> Posts;
+
+    public AppModel() {
+        this.posts = new ArrayList<>();
+    }
+
+    public void addPost(Post post) {
+        posts.add(post);
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+}
+
+public class
 public class application {
     // Define application view here
 
@@ -28,7 +48,7 @@ public class application {
         }
     }
     public static void makePost() {
-        
+
     }
 
     public static void desplayPosts() {

@@ -4,7 +4,21 @@ public class Post {
     public double price;
     // public ??? pictures;
     public User seller;
-    // Define methods for posts
-    // make posts a class
 
+    // Define methods for posts
+    public String getTitle() {
+        return title;
+    }
+
+    public void getDescription() {
+        return description;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public User getSeller() {
+
+    }
 }
