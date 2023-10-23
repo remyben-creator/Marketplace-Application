@@ -37,6 +37,23 @@ Post - User : \tInteracted-with\t\t
 ```
 
 ```plantuml
+actor User as user
+actor Seller as seller
+actor Buyer as buyer
+participant " : Post" as post
+
+[o-> user : open application
+user -> seller : chooses to post
+user -> buyer : chooses to search
+
+seller -> post : post(title, descrip, price, pics, seller)
+post -> post : validateItem()
+
+buyer -> post : search(searchString) 
+post -> buyer : displayPosts()
+```
+
+```plantuml
 
 |User|
 start
