@@ -9,7 +9,7 @@ public class View {
     }
 
     public void welcomeMessage() {
-        System.out.println("Welcome to Vassar Marketplace!");
+        System.out.println("\nWelcome to Vassar Marketplace!");
     }
     public void displayPosts(List<Post> posts) {
         for (int i = 0; i < posts.size(); i++) {
