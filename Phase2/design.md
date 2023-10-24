@@ -1,24 +1,42 @@
 ```plantuml
-class Post{
- + title: String
- + description: String
- + price: double
- + pictures: JPEG files
- + seller: Seller
+class Item{
+ + serialNumber: int
+ + title: string
+ + description: string
+ + pictures: pictures
+ + price: int
+ + seller : seller
 }
 class User{
- + name: String
- - email: String(ends with vasser.edu)
+ + name: name
+ - email: email
 }
 
 class Seller{
- + post(title: String, description: String, price: double, pictures: JPEG files, seller: Seller(self)): Post
+ + listedItems : arrayList<>()
+ - editItem()
 }
 
 class Buyer{
- + search(searchString: String): Post
+ - searchHistory: searchForm
+ - viewedItems : arrayList<>()
 }
 
+class SearchResult {
+ + length : int
+}
+
+class ItemCatalog {
+ + length : int
+}
+
+class Controller {
+
+}
+
+class UI { 
+
+}
 User <|-- Seller
 User <|-- Buyer
 
@@ -42,21 +60,18 @@ Search For Items Sequence Diagram:
 hide footbox
 actor Buyer as buyer
 participant " : UI" as ui
-participant " : Database" as database
-participant "ItemCatalog[i] : ItemList" as itemlist
-participant " : RetList" as retlist
-
+participant " : Controller" as controller
+participant "ItemCatalog[i] : ItemCatalog" as itemcatalog
 
 ui -> buyer : displays item search form 
 buyer -> ui : fills out search form
 buyer -> ui : clicks search
-ui -> database : str = toString(searchForm)
-[o-> database : createList()
+ui -> controller : str = toString(searchForm)
 loop i in 0..ItemCatalog.size-1
-    database -> retlist : similarItems = ItemCatalog[i].contains(str)
+    controller -> itemcatalog : searchResult = similarItems(ItemCatalog[i], str)
 end
-retlist -> ui : searchResult(retlist)
-ui -> buyer : Displays search result
+controller -> ui : searchResult
+ui -> buyer : Displays searchResult
 
 
 ```
@@ -65,18 +80,18 @@ Post Items Sequence Diagram
 hide footbox
 actor Seller as seller
 participant " : UI" as ui
-participant " : Moderator" as moderator
+participant " : Controller" as controller
 participant " : ItemCatalog" as itemcatalog
 
 ui -> seller : displays item post form
 seller -> ui : inputs item information
 seller -> ui : clicks confirm
-ui -> moderator : createItem(name, category, description, price, pictures)
-alt ItemValid
- moderator -> itemcatalog : addItem(name, category, description, price, pictures)
+ui -> controller : createItem(name, category, description, price, pictures)
+alt isValid
+ controller -> itemcatalog : addItem(name, category, description, price, pictures)
  ui -> seller : print "item has been successfully posted!"
-else !ItemValid
- moderator -> ui : error()
+else !isValid
+ controller -> ui : error()
  ui -> seller : print "Item could not be verified, please check your information and try again"
 end
 ```
