@@ -1,5 +1,5 @@
 ### Depth
-- Casual
+- In-Depth
 ###  Primary actor and goals:
 - Users on the marketplace looking to buy items 
 ### Other stakeholders and interests:
@@ -19,7 +19,11 @@ start
 :Searches for an item on the Marketplace;
 |System|
 :Compares user's string input and matches with list of items;
+if (searchResult.length != 0?) then (Yes)
 :Displays the similar items to the user;
+else (no)
+:Print "No existing items match that description, please try again";
+endif 
 stop
 @enduml
 ```
