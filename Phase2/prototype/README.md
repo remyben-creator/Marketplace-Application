@@ -1,6 +1,9 @@
 # CMPU-203 F23 - Team 1H
 
-
+In order to run application. Cd into prototype folder within Phase2 of project.
+Then open terminal and type "javac App.java Controller.java View.java Model.java Post.java"
+and press enter to compile all the required java files. Then type "java App"
+to run. Once program is running, follow prompts until you would like to quit.
 
 ## Getting started
 
