@@ -22,36 +22,38 @@ class Buyer{
  - viewedItems : arrayList<>()
 }
 
-class SearchResult {
- + length : int
-}
-
 class ItemCatalog {
  + length : int
 }
 
 class Controller {
-
++ searchResult()
++ similarItems()
++ addItem()
++ isValid()
++ error()
 }
 
 class UI { 
++ createItem()
 
+}
+
+class Post {
++ seller : seller
++ item : item
 }
 User <|-- Seller
 User <|-- Buyer
+ItemCatalog .> Item
+Post .> Item
+Post .> Seller
+UI .> Controller
+Item .> Seller
 
-class productDescription{
- title
- description
- price
- pictures
- seller
-}
 
-productDescription - Post : \tDescribes\t\t
-Post - Seller : \tPosted-by\t\t
-Post - Buyer : \tSearched-for\t\t
-Post - User : \tInteracted-with\t\t
+
+
 ```
 
 Search For Items Sequence Diagram: 
