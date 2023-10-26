@@ -1,11 +1,10 @@
 ```plantuml
-class Item{
+class Post{
  + serialNumber: int
  + title: string
  + description: string
  + pictures: pictures
  + price: int
- + seller : seller
 }
 class User{
  + name: name
@@ -45,11 +44,9 @@ class Post {
 }
 User <|-- Seller
 User <|-- Buyer
-ItemCatalog .> Item
-Post .> Item
+ItemCatalog .> Post
 Post .> Seller
 UI .> Controller
-Item .> Seller
 
 
 
