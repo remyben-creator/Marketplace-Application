@@ -61,13 +61,15 @@ actor Buyer as buyer
 participant " : UI" as ui
 participant " : Controller" as controller
 participant "ItemCatalog[i] : ItemCatalog" as itemcatalog
+participant " : SearchResult" as searchresult
 
 ui -> buyer : displays item search form 
 buyer -> ui : fills out search form
 buyer -> ui : clicks search
-ui -> controller : str = toString(searchForm)
+ui -> controller : search(searchForm)
+controller -> itemcatalog : createKeyword(searchForm)
 loop i in 0..ItemCatalog.size-1
-    controller -> itemcatalog : searchResult = similarItems(ItemCatalog[i], str)
+    itemcatalog -> searchresult : searchResult = similarItems(ItemCatalog[i], keyword)
 end
 controller -> ui : searchResult
 ui -> buyer : Displays searchResult
