@@ -1,55 +1,51 @@
 ```plantuml
 class Post{
+ + User : user
+ + Item : item
+}
+
+class Item{
  + serialNumber: int
  + title: string
  + description: string
  + pictures: pictures
  + price: int
-}
+ }
+ 
 class User{
  + name: name
  - email: email
-}
-
-class Seller{
- + listedItems : arrayList<>()
- - editItem()
-}
-
-class Buyer{
- - searchHistory: searchForm
- - viewedItems : arrayList<>()
+ - listedItems: arrayList<>
+ - viewedItems: arrayList<>
+ + editItem()
 }
 
 class ItemCatalog {
  + length : int
+ + similarItems()
+ + searchResult()
+}
+
+class Moderator {
++ isValid()
++ error()
++ addItem()
 }
 
 class Controller {
-+ searchResult()
-+ similarItems()
-+ addItem()
-+ isValid()
-+ error()
++ createKeyword()
 }
 
 class UI { 
 + createItem()
-
++ search()
 }
 
-class Post {
-+ seller : seller
-+ item : item
-}
-User <|-- Seller
-User <|-- Buyer
-ItemCatalog .> Post
-Post .> Seller
-UI .> Controller
-
-
-
+Post .> User
+Post .> Item
+ItemCatalog - Item
+Moderator .> UI
+Controller .> UI
 
 ```
 
@@ -81,18 +77,18 @@ Post Items Sequence Diagram
 hide footbox
 actor Seller as seller
 participant " : UI" as ui
-participant " : Controller" as controller
+participant " : Moderator" as moderator
 participant " : ItemCatalog" as itemcatalog
 
 ui -> seller : displays item post form
 seller -> ui : inputs item information
 seller -> ui : clicks confirm
-ui -> controller : createItem(name, category, description, price, pictures)
+ui -> moderator : createItem(name, category, description, price, pictures)
 alt isValid
- controller -> itemcatalog : addItem(name, category, description, price, pictures)
+ moderator -> itemcatalog : addItem(name, category, description, price, pictures)
  ui -> seller : print "item has been successfully posted!"
 else !isValid
- controller -> ui : error()
+ moderator -> ui : error()
  ui -> seller : print "Item could not be verified, please check your information and try again"
 end
 ```
