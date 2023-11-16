@@ -3,5 +3,11 @@ package edu.vassar.cmpu203.vassarmarketplace.view;
 import android.view.View;
 
 public interface IAddItemView {
-    public View getRootView();
+
+    interface Listener {
+        public void uponPost(String itemTitle, Double itemPrice, String itemDesc, String itemPics);
+        public void uponBack();
+    }
+
+
 }

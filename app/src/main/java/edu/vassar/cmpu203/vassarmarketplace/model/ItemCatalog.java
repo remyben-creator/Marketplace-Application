@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 public class ItemCatalog {
     public int length;
-    private LinkedList<Item> items;
+    public LinkedList<Item> items;
 
     public void addItem(Item item) {
         items.add(item);

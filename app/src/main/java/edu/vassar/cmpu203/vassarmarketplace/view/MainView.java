@@ -25,11 +25,11 @@ public class MainView implements IMainView{
     }
 
     @Override
-    public void displayFragment(Fragment fragment, boolean reversible, String name) {
+    public void displayFragment(Fragment fragment, boolean addToStack, String name) {
         FragmentTransaction ft = fManager.beginTransaction();
 
         ft.replace(this.binding.fragmentContainerView.getId(), fragment);
-        //if (addToStack) ft.addToBackStack(name);
+        if (addToStack) ft.addToBackStack(name);
         ft.commit();
     }
 }

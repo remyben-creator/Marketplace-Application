@@ -7,15 +7,18 @@ public class Item {
     public int serialNumber;
     public String title;
     public String description;
-    public int price;
-    //public JPEG pictures;
-    public User seller;
+    public Double price;
+    //both types below will need to be changed soon
+    public String pictures;
+    public String seller;
 
-    public Item(String title, String description, int price, User seller) {
+    public Item(String title, Double price, String description, String pictures) {
+        this.serialNumber = 0;
         this.title = title;
         this.description = description;
         this.price = price;
-        this.seller = seller;
+        this.pictures = pictures;
+        this.seller = "Default";
     }
 
     // Define methods for posts
@@ -33,17 +36,17 @@ public class Item {
         this.description = description;
     }
 
-    public int getPrice() {
+    public Double getPrice() {
         return price;
     }
-    public void setPrice(int price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public User getSeller() {
+    public String getSeller() {
         return seller;
     }
-    public void setSeller(User seller) {
+    public void setSeller(String seller) {
         this.seller = seller;
     }
 }
