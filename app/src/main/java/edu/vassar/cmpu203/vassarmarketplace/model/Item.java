@@ -1,5 +1,7 @@
 package edu.vassar.cmpu203.vassarmarketplace.model;
 
+import java.text.DecimalFormat;
+
 /**
  * Represents a single item
  */
@@ -23,28 +25,34 @@ public class Item {
 
     // Define methods for posts
     public String getTitle() {
-        return title;
+        return this.title;
     }
     public void setTitle(String title) {
         this.title = title;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
     public void setDescription(String description) {
         this.description = description;
     }
 
     public Double getPrice() {
-        return price;
+        return this.price;
+    }
+    public String getPriceString() {
+        DecimalFormat decimalFormat = new DecimalFormat("##.##"); // Two decimal places
+        String priceString = decimalFormat.format(this.price);
+
+        return priceString;
     }
     public void setPrice(Double price) {
         this.price = price;
     }
 
     public String getSeller() {
-        return seller;
+        return this.seller;
     }
     public void setSeller(String seller) {
         this.seller = seller;

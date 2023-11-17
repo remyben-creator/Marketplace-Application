@@ -1,6 +1,7 @@
 package edu.vassar.cmpu203.vassarmarketplace.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import edu.vassar.cmpu203.vassarmarketplace.model.Item;
 import edu.vassar.cmpu203.vassarmarketplace.model.ItemCatalog;
@@ -32,7 +33,8 @@ public class MainActivity extends AppCompatActivity
         mainView = new MainView(this);
         setContentView(mainView.getRootView());
 
-        mainView.displayFragment(new HomeFeedFragment(this), false, "home feed");
+
+        mainView.displayFragment(new HomeFeedFragment(this, this.items), false, "home feed");
         // call this again to move around fragments
     }
 
@@ -40,25 +42,35 @@ public class MainActivity extends AppCompatActivity
     public void uponAddItem() {
         this.mainView.displayFragment(new AddItemFragment(this),false,"add item screen");
     }
-    public void uponSearch() {}
-    public void uponMyItems() {}
+    public void uponSearch(String searchString) {
+        ItemCatalog searchItems = this.items.searchResult(searchString);
+        this.mainView.displayFragment(new HomeFeedFragment(this, searchItems),false,"search item feed");
+    }
+    public void uponMyItems() {
+        // to be implemented with the addition of accounts
+        ItemCatalog myItems = this.items.myItems("Seller");
+        this.mainView.displayFragment(new HomeFeedFragment(this, myItems),false,"my item feed");
+    }
     public void uponAccount() {
         this.mainView.displayFragment(new AccountFragment(this),false,"account screen");
     }
 
     //Add Item listener methods
     public void uponBack() {
-        this.mainView.displayFragment(new HomeFeedFragment(this),false,"home feed");
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
+    }
+    public void uponHome() {
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
     }
     public void uponPost(String itemTitle, Double itemPrice, String itemDesc, String itemPics) {
         this.items.addItem(new Item(itemTitle, itemPrice, itemDesc, itemPics));
-        this.mainView.displayFragment(new HomeFeedFragment(this),false,"home feed");
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
     }
 
     //Account listener methods
     public void uponLogin(String userEmail, String userPassword) {
         //user params to create a user
-        this.mainView.displayFragment(new HomeFeedFragment(this),false,"home feed");
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
     }
 
 }
