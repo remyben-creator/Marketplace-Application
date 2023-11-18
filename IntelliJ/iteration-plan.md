@@ -9,3 +9,11 @@
   depth yet.  If there are no similar items on the marketplace, the
   user will see a message depicting that. The use case has been 
   updated to reflect the change.  
+
+
+# Next Iteration Plan
+- Our final iteration will be focused on adding the ability for users to create accounts and creating the validating methods to ensure posts adhere to marketplace guidelines
+
+
+# Requirements Update
+- We separated our post class to contain and item and a seller rather than a seller and all the item information

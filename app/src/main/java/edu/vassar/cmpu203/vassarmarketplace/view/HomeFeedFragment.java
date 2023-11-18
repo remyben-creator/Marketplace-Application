@@ -28,7 +28,7 @@ import edu.vassar.cmpu203.vassarmarketplace.model.ItemCatalog;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link HomeFeedFragment#newInstance} factory method to
+ * Use the {@link HomeFeedFragment #newInstance} factory method to
  * create an instance of this fragment.
  */
 public class HomeFeedFragment extends Fragment implements IHomeFeedView{
@@ -44,22 +44,22 @@ public class HomeFeedFragment extends Fragment implements IHomeFeedView{
         this.currentList = currentList;
     }
 
-    @Override
+@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState, ItemCatalog currentList) {
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+      //  setContentView(R.layout.activity_main);
         this.binding = FragmentHomeFeedBinding.inflate(inflater);
-
-        //somehow get the current list to get displayed in the scroller at this moment
+/**
+        // somehow get the current list to get displayed in the scroller at this moment
         RecyclerView recyclerView = findViewById(R.id.item_catalog_widget);
 
-        currentList.addItem(new Item("Title", 1.99, "Descripion", "user"));
+        currentList.addItem(new Item("Title", 1.99, "Description", "user"));
 
         //making the recycler
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new MyAdapter(getApplicationContext(),currentList));
-
+*/
         return this.binding.getRoot();
 
 

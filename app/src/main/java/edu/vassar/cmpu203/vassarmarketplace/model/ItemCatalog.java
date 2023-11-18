@@ -46,9 +46,7 @@ public class ItemCatalog {
         }
         return null;
     }
-
-
-    //to be implemented later
+    /** /to be implemented later
     public ItemCatalog similarItems() {
         //returns items similar to
         ItemCatalog similarItems = new ItemCatalog();
@@ -59,6 +57,7 @@ public class ItemCatalog {
         }
         return similarItems;
     }
+     */
     public ItemCatalog searchResult(String searchString) {
         // returns a list of items that match a user search
         ItemCatalog searchItems = new ItemCatalog();

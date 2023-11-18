@@ -27,7 +27,7 @@ public class Item {
     public String getTitle() {
         return this.title;
     }
-    public void setTitle(String title) {
+    public void setTitle() {
         this.title = title;
     }
 

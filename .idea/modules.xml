@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/team-1h.iml" filepath="$PROJECT_DIR$/.idea/team-1h.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Vassar_Marketplace.iml" filepath="$PROJECT_DIR$/.idea/modules/Vassar_Marketplace.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Vassar_Marketplace.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Vassar_Marketplace.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Vassar_Marketplace.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Vassar_Marketplace.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Vassar_Marketplace.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Vassar_Marketplace.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Vassar_Marketplace.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Vassar_Marketplace.app.unitTest.iml" />
     </modules>
   </component>
 </project>
