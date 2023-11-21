@@ -15,16 +15,18 @@ in their postings, and change their desired price.
 ```plantuml
 |User|
 start
-:Visits manage item screen;
+:Visits manage items screen;
 |System|
-:Asks for desired action: Change price, Remove item, View interest;
+:Displays posted items;
+|User|
+Selects the item they would like to edit;
+|System| 
+Displays edit item form;
 switch (Desired action?)
-    case (Change Price)
-        :Execute __change-price__;
-    case (Remove Item)
-        :Execute __remove-item__;
-    case (View Interest)
-        :Show number of interested buyers;
+    case (Confirm Changes)
+        :Execute __edit-item__;
+    case (Go Back)
+        :Display posted items;
 endswitch
 Stop
 @enduml
