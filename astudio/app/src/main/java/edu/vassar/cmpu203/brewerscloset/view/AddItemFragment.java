@@ -20,9 +20,9 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.net.URI;
 
-import edu.vassar.cmpu203.vassarmarketplace.R;
-import edu.vassar.cmpu203.vassarmarketplace.databinding.FragmentAddItemBinding;
-import edu.vassar.cmpu203.vassarmarketplace.model.Moderator;
+import edu.vassar.cmpu203.brewerscloset.R;
+import edu.vassar.cmpu203.brewerscloset.databinding.FragmentAddItemBinding;
+import edu.vassar.cmpu203.brewerscloset.model.Moderator;
 
 /**
  *

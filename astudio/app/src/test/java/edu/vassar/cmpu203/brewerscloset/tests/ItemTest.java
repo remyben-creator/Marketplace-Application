@@ -3,6 +3,8 @@ package edu.vassar.cmpu203.brewerscloset.tests;
 import static org.junit.Assert.*;
 import org.junit.Test; // for the @Test annotation
 
+import edu.vassar.cmpu203.brewerscloset.model.Item;
+
 public class ItemTest {
     Item i = new Item("lights", 9.99, "blue", "none" );
     @Test

@@ -15,9 +15,9 @@ import android.widget.Button;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import edu.vassar.cmpu203.vassarmarketplace.R;
-import edu.vassar.cmpu203.vassarmarketplace.databinding.FragmentAccountBinding;
-import edu.vassar.cmpu203.vassarmarketplace.model.Moderator;
+import edu.vassar.cmpu203.brewerscloset.R;
+import edu.vassar.cmpu203.brewerscloset.databinding.FragmentAccountBinding;
+import edu.vassar.cmpu203.brewerscloset.model.Moderator;
 
 /**
  *

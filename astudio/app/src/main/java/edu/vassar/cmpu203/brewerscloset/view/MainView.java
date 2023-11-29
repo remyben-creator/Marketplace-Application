@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import edu.vassar.cmpu203.vassarmarketplace.databinding.MainBinding;
+import edu.vassar.cmpu203.brewerscloset.databinding.MainBinding;
 
 public class MainView implements IMainView{
 

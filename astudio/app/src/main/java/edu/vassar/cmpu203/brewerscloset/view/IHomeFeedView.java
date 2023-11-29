@@ -2,7 +2,7 @@ package edu.vassar.cmpu203.brewerscloset.view;
 
 import android.view.View;
 
-import edu.vassar.cmpu203.vassarmarketplace.model.ItemCatalog;
+import edu.vassar.cmpu203.brewerscloset.model.ItemCatalog;
 
 public interface IHomeFeedView {
     interface Listener {

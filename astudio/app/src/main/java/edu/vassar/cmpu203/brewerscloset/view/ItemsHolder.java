@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import edu.vassar.cmpu203.vassarmarketplace.R;
+import edu.vassar.cmpu203.brewerscloset.R;
 
 public class ItemsHolder extends RecyclerView.ViewHolder {
 

@@ -2,6 +2,9 @@ package edu.vassar.cmpu203.brewerscloset.tests;
 import org.junit.Assert;
 import org.junit.Test; // for the @Test annotation
 
+import edu.vassar.cmpu203.brewerscloset.model.Item;
+import edu.vassar.cmpu203.brewerscloset.model.ItemCatalog;
+
 public class ItemCatalogTest {
     ItemCatalog c = new ItemCatalog();
     Item i1  = new Item("lights", 9.99, "blue", "none" );

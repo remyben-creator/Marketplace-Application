@@ -6,19 +6,19 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import edu.vassar.cmpu203.vassarmarketplace.model.Item;
-import edu.vassar.cmpu203.vassarmarketplace.model.ItemCatalog;
-import edu.vassar.cmpu203.vassarmarketplace.model.User;
-import edu.vassar.cmpu203.vassarmarketplace.model.UserCatalog;
-import edu.vassar.cmpu203.vassarmarketplace.view.AccountFragment;
-import edu.vassar.cmpu203.vassarmarketplace.view.AddItemFragment;
-import edu.vassar.cmpu203.vassarmarketplace.view.HomeFeedFragment;
-import edu.vassar.cmpu203.vassarmarketplace.view.IAccountView;
-import edu.vassar.cmpu203.vassarmarketplace.view.IMainView;
-import edu.vassar.cmpu203.vassarmarketplace.view.LoggedInAccountFragment;
-import edu.vassar.cmpu203.vassarmarketplace.view.MainView;
-import edu.vassar.cmpu203.vassarmarketplace.view.IAddItemView;
-import edu.vassar.cmpu203.vassarmarketplace.view.IHomeFeedView;
+import edu.vassar.cmpu203.brewerscloset.model.Item;
+import edu.vassar.cmpu203.brewerscloset.model.ItemCatalog;
+import edu.vassar.cmpu203.brewerscloset.model.User;
+import edu.vassar.cmpu203.brewerscloset.model.UserCatalog;
+import edu.vassar.cmpu203.brewerscloset.view.AccountFragment;
+import edu.vassar.cmpu203.brewerscloset.view.AddItemFragment;
+import edu.vassar.cmpu203.brewerscloset.view.HomeFeedFragment;
+import edu.vassar.cmpu203.brewerscloset.view.IAccountView;
+import edu.vassar.cmpu203.brewerscloset.view.IMainView;
+import edu.vassar.cmpu203.brewerscloset.view.LoggedInAccountFragment;
+import edu.vassar.cmpu203.brewerscloset.view.MainView;
+import edu.vassar.cmpu203.brewerscloset.view.IAddItemView;
+import edu.vassar.cmpu203.brewerscloset.view.IHomeFeedView;
 
 
 import android.app.Activity;

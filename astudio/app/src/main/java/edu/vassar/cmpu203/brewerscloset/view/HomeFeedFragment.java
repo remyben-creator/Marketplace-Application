@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import edu.vassar.cmpu203.vassarmarketplace.databinding.FragmentHomeFeedBinding;
-import edu.vassar.cmpu203.vassarmarketplace.model.ItemCatalog;
+import edu.vassar.cmpu203.brewerscloset.databinding.FragmentHomeFeedBinding;
+import edu.vassar.cmpu203.brewerscloset.model.ItemCatalog;
 
 
 /**

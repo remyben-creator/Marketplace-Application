@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import edu.vassar.cmpu203.vassarmarketplace.R;
-import edu.vassar.cmpu203.vassarmarketplace.model.ItemCatalog;
+import edu.vassar.cmpu203.brewerscloset.R;
+import edu.vassar.cmpu203.brewerscloset.model.ItemCatalog;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsHolder> {
     Context context;
