@@ -1,0 +1,168 @@
+package edu.vassar.cmpu203.brewerscloset.controller;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+
+import edu.vassar.cmpu203.vassarmarketplace.model.Item;
+import edu.vassar.cmpu203.vassarmarketplace.model.ItemCatalog;
+import edu.vassar.cmpu203.vassarmarketplace.model.User;
+import edu.vassar.cmpu203.vassarmarketplace.model.UserCatalog;
+import edu.vassar.cmpu203.vassarmarketplace.view.AccountFragment;
+import edu.vassar.cmpu203.vassarmarketplace.view.AddItemFragment;
+import edu.vassar.cmpu203.vassarmarketplace.view.HomeFeedFragment;
+import edu.vassar.cmpu203.vassarmarketplace.view.IAccountView;
+import edu.vassar.cmpu203.vassarmarketplace.view.IMainView;
+import edu.vassar.cmpu203.vassarmarketplace.view.LoggedInAccountFragment;
+import edu.vassar.cmpu203.vassarmarketplace.view.MainView;
+import edu.vassar.cmpu203.vassarmarketplace.view.IAddItemView;
+import edu.vassar.cmpu203.vassarmarketplace.view.IHomeFeedView;
+
+
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+
+public class MainActivity extends AppCompatActivity
+    implements IAddItemView.Listener, IHomeFeedView.Listener, IAccountView.Listener {
+
+    ItemCatalog items;
+    User user;
+    UserCatalog users;
+    IMainView mainView;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //start with empty item/user catalog
+        this.items = new ItemCatalog();
+        this.users = new UserCatalog();
+
+        //start with no login info
+        this.user = new User("Guest", null);
+
+        //create main view object
+        mainView = new MainView(this);
+        setContentView(mainView.getRootView());
+
+
+        mainView.displayFragment(new HomeFeedFragment(this, this.items), false, "home feed");
+        // call this again to move around fragments
+    }
+
+    //Home feed listener methods
+    public void uponAddItem() {
+        this.mainView.displayFragment(new AddItemFragment(this),false,"add item screen");
+    }
+    public void uponSearch(String searchString) {
+        ItemCatalog searchItems = this.items.searchResult(searchString);
+        this.mainView.displayFragment(new HomeFeedFragment(this, searchItems),false,"search item feed");
+    }
+    public void uponMyItems() {
+        // to be implemented with the addition of accounts
+        ItemCatalog myItems = this.user.myItems;
+        this.mainView.displayFragment(new HomeFeedFragment(this, myItems),false,"my item feed");
+    }
+    public void uponAccount() {
+        if (this.user.email.equals("Guest")) {
+            this.mainView.displayFragment(new AccountFragment(this), false, "account screen");
+        }
+        else {
+            this.mainView.displayFragment(new LoggedInAccountFragment(this), false, "logged in account screen");
+        }
+    }
+    public boolean loggedIn() {
+        if (this.user.email.equals("Guest")) {
+            return false;
+        }
+        return true;
+    }
+    //Home feed --> items adapter listener methods
+    public boolean checkForMyItems(ItemCatalog items) {
+        if (items.equals(this.user.myItems)) {return true;}
+        return false;
+    }
+
+    //Add Item listener methods
+    public void uponBackToHome() {
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
+    }
+    public void uponHome() {
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
+    }
+    public void uponPost(String itemTitle, Double itemPrice, String itemDesc, String itemPics) {
+        Item item = this.user.createItem(itemTitle, itemPrice, itemDesc, itemPics, this.user);
+        this.items.addItem(item);
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
+    }
+
+    public void uponAddPics(IAddItemView aiv) {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        this.aiv = aiv;
+        imgARL.launch(intent);
+
+
+    }
+
+    IAddItemView aiv;
+    ActivityResultLauncher<Intent> imgARL = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        //there are no request codes
+                        Intent data = result.getData();
+                        Uri photo = data.getData();
+                        aiv.updateImage(photo);
+                    }
+                }
+            }
+    );
+
+    //Account listener methods
+    public void uponLoginGoHome() {
+        //just to switch to the HomeFeed
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
+    }
+    public boolean checkValidLogin(String userEmail, String userPassword) {
+        //user params to check a user login
+        //and puts the user as current user if correct
+        User localUser = this.users.loginUser(userEmail, userPassword);
+        if (user != null) {
+            this.user = localUser;
+            return true;
+        }
+        return false;
+    }
+    public void uponLogout(){
+        this.user = new User("Guest", null);
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
+
+    }
+    public void uponCreateAccountGoHome() {
+        //to switch to home feed following an account creation
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
+    }
+    public boolean checkCreateAccount(String userEmail, String userPassword) {
+        //user params to create a user
+        //check to see if its already there
+        user = this.users.checkForUser(userEmail, userPassword);
+        if (user == null) {
+            User user = new User(userEmail, userPassword);
+            this.user = user;
+            this.users.addUser(user);
+            return true;
+        }
+        return false;
+    }
+    public String getUserEmail() {
+        return this.user.email;
+    }
+
+}
