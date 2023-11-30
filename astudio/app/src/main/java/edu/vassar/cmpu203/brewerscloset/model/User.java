@@ -38,4 +38,11 @@ public class User {
     public void deleteItem(Item item) {
         myItems.removeItem(item);
     }
+
+    public void addInterest(Item item, String interest) {
+        item.interests.addInterest(new ItemInterestForm(this, item, interest));
+    }
+    public void removeInterest(Item item, String interest) {
+        item.interests.removeInterest(new ItemInterestForm(this, item, interest));
+    }
 }

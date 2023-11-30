@@ -13,10 +13,12 @@ import java.util.ListIterator;
 public class ItemCatalog {
     public int length;
     public List<Item> items;
+    public boolean forInterest;
 
     public ItemCatalog() {
         this.length = 0;
         this.items = new LinkedList<>();
+        this.forInterest = false;
     }
 
     public void addItem(Item item) {

@@ -4,7 +4,7 @@ public interface IAccountView {
 
     interface Listener {
         public void uponLoginGoHome();
-        public void uponBackToHome();
+        public void uponBackToHome(boolean edit);
         public void uponCreateAccountGoHome();
         public void uponLogout();
         public String getUserEmail();

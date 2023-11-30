@@ -64,7 +64,7 @@ public class AddItemFragment extends Fragment implements IAddItemView{
             @Override
             public void onClick(View v) {
                 Snackbar.make(v, "Back To Home Feed", Snackbar.LENGTH_LONG).show();
-                AddItemFragment.this.listener.uponBackToHome();
+                AddItemFragment.this.listener.uponBackToHome(edit);
             }
         });
 

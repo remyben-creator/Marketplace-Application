@@ -51,9 +51,10 @@ public class HomeFeedFragment extends Fragment implements IHomeFeedView{
         //making the recycler
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         if (this.listener.checkForMyItems(currentList)) {
-            recyclerView.setAdapter(new ItemsAdapter(this.getContext(), this.currentList, true, this.listener));
+            recyclerView.setAdapter(new ItemsAdapter(this.getContext(), this.currentList, true, false, this.listener));
         }
-        else {recyclerView.setAdapter(new ItemsAdapter(this.getContext(), this.currentList, false, this.listener));}
+        if (this.currentList.forInterest) {recyclerView.setAdapter(new ItemsAdapter(this.getContext(), this.currentList, false, true, this.listener));}
+        else {recyclerView.setAdapter(new ItemsAdapter(this.getContext(), this.currentList, false, false, this.listener));}
 
         return this.binding.getRoot();
 

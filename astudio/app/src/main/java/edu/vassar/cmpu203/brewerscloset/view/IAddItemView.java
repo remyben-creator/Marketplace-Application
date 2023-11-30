@@ -8,7 +8,7 @@ public interface IAddItemView {
 
     interface Listener {
         public void uponPost(Item item, String itemTitle, Double itemPrice, String itemDesc, String itemPics, boolean edit);
-        public void uponBackToHome();
+        public void uponBackToHome(boolean edit);
         public void uponAddPics(IAddItemView aiv);
 
     }

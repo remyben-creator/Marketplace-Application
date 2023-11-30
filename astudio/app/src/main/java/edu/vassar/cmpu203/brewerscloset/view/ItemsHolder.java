@@ -2,6 +2,7 @@ package edu.vassar.cmpu203.brewerscloset.view;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 
@@ -15,7 +16,8 @@ import edu.vassar.cmpu203.brewerscloset.R;
 public class ItemsHolder extends RecyclerView.ViewHolder {
 
     TextView titleView, descriptionView, priceView;
-    Button editButton, deleteButton, viewInterestButton, interestButton;
+    Button editButton, deleteButton, viewInterestButton, interestButton, backButton, confirmButton;
+    EditText interestBar;
 
     public ItemsHolder(@NonNull View itemView) {
         super(itemView);
@@ -28,6 +30,11 @@ public class ItemsHolder extends RecyclerView.ViewHolder {
         this.viewInterestButton = itemView.findViewById(R.id.viewInterestButton);
 
         this.interestButton = itemView.findViewById(R.id.interestButton);
+
+        this.backButton = itemView.findViewById(R.id.backButton);
+        this.confirmButton = itemView.findViewById(R.id.confirmButton);
+        this.interestBar = itemView.findViewById(R.id.interestBar);
+
 
 
     }

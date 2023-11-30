@@ -18,8 +18,9 @@ public interface IHomeFeedView {
         //items adapter called listener methods
         public void uponEdit(Item item);
         public void uponViewInterest();
-        public void uponInterest();
+        public void uponInterest(Item item);
         public void uponDelete(Item item);
+        public void uponConfirm(Item item, String interest);
     }
 
 }

@@ -49,7 +49,7 @@ public class LoggedInAccountFragment extends Fragment implements IAccountView{
             @Override
             public void onClick(View v) {
                 Snackbar.make(v, "Back To Home Feed", Snackbar.LENGTH_LONG).show();
-                LoggedInAccountFragment.this.listener.uponBackToHome();
+                LoggedInAccountFragment.this.listener.uponBackToHome(false);
             }
         });
 

@@ -77,6 +77,9 @@ public class MainActivity extends AppCompatActivity
             this.mainView.displayFragment(new LoggedInAccountFragment(this), false, "logged in account screen");
         }
     }
+    public void uponHome() {
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
+    }
     public boolean loggedIn() {
         if (this.user.email.equals("Guest")) {
             return false;
@@ -92,27 +95,41 @@ public class MainActivity extends AppCompatActivity
         this.mainView.displayFragment(new AddItemFragment(this, true, item),false,"add item screen in edit");
     }
     public void uponViewInterest() {}
-    public void uponInterest() {}
+    public void uponInterest(Item item) {
+        ItemCatalog itemInterest = new ItemCatalog();
+        itemInterest.addItem(item);
+        itemInterest.forInterest = true;
+        this.mainView.displayFragment(new HomeFeedFragment(this, itemInterest), false, "home feed");
+    }
     public void uponDelete(Item item) {
         this.mainView.displayFragment(new ConfirmDeleteFragment(this, item), false, "confirm delete page");
     }
+    public void uponConfirm(Item item, String interest) {
+        this.user.addInterest(item, interest);
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items), false, "home feed");
+    }
 
     //Add Item listener methods
-    public void uponBackToHome() {
-        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
-    }
-    public void uponHome() {
-        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
+    public void uponBackToHome(boolean edit) {
+        if (edit) {
+            ItemCatalog myItems = this.user.myItems;
+            this.mainView.displayFragment(new HomeFeedFragment(this, myItems),false,"my item feed");
+        }
+        else {
+            this.mainView.displayFragment(new HomeFeedFragment(this, this.items), false, "home feed");
+        }
     }
     public void uponPost(Item item, String itemTitle, Double itemPrice, String itemDesc, String itemPics, boolean edit) {
         if (edit) {
             this.user.editItem(item, itemTitle, itemPrice, itemDesc, itemPics);
+            this.mainView.displayFragment(new HomeFeedFragment(this, this.user.myItems),false,"my item feed");
         }
         else {
         Item newItem = this.user.createItem(itemTitle, itemPrice, itemDesc, itemPics, this.user);
-        this.items.addItem(newItem);}
+        this.items.addItem(newItem);
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");}
 
-        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
+
     }
 
     public void uponAddPics(IAddItemView aiv) {
