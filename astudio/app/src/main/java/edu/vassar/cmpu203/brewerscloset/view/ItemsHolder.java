@@ -15,7 +15,7 @@ import edu.vassar.cmpu203.brewerscloset.R;
 
 public class ItemsHolder extends RecyclerView.ViewHolder {
 
-    TextView titleView, descriptionView, priceView;
+    TextView titleView, descriptionView, priceView, userEmailView, userInterestView;
     Button editButton, deleteButton, viewInterestButton, interestButton, backButton, confirmButton;
     EditText interestBar;
 
@@ -34,6 +34,9 @@ public class ItemsHolder extends RecyclerView.ViewHolder {
         this.backButton = itemView.findViewById(R.id.backButton);
         this.confirmButton = itemView.findViewById(R.id.confirmButton);
         this.interestBar = itemView.findViewById(R.id.interestBar);
+
+        this.userEmailView = itemView.findViewById(R.id.userEmailView);
+        this.userInterestView = itemView.findViewById(R.id.userInterestView);
 
 
 

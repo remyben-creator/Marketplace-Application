@@ -15,7 +15,7 @@ public class Item {
     //both types below will need to be changed soon
     public String pictures;
     public User seller;
-    public ItemInterestList interests;
+    public ItemInterestCatalog interests;
 
     public Item(String title, Double price, String description, String pictures, User seller) {
         this.serialNumber = 0;
@@ -24,7 +24,7 @@ public class Item {
         this.price = price;
         this.pictures = pictures;
         this.seller = seller;
-        this.interests = new ItemInterestList();
+        this.interests = new ItemInterestCatalog(this);
     }
 
     // Define methods for posts

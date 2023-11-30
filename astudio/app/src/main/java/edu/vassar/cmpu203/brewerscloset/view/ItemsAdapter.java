@@ -12,113 +12,135 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 
 import edu.vassar.cmpu203.brewerscloset.R;
+import edu.vassar.cmpu203.brewerscloset.model.Catalog;
+import edu.vassar.cmpu203.brewerscloset.model.Item;
 import edu.vassar.cmpu203.brewerscloset.model.ItemCatalog;
+import edu.vassar.cmpu203.brewerscloset.model.ItemInterestCatalog;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsHolder>{
     Context context;
-    ItemCatalog items;
+    //possibly make into list
+    //but will need to make an interest holder and interest adapter
+    Catalog items;
     Boolean my_list;
     Boolean toInterest;
     IHomeFeedView.Listener listener;
 
-    public ItemsAdapter(Context context, ItemCatalog items, Boolean my_list, Boolean toInterest, IHomeFeedView.Listener listener) {
+    public ItemsAdapter(Context context, Catalog items, Boolean my_list, Boolean toInterest, IHomeFeedView.Listener listener) {
         this.context = context;
         this.items = items;
         this.my_list = my_list;
         this.toInterest = toInterest;
         this.listener = listener;
-        this.toInterest = toInterest;
     }
 
     @NonNull
     @Override
     public ItemsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (my_list) {
-            return new ItemsHolder(LayoutInflater.from(context).inflate(R.layout.my_item_view,parent,false));}
-        if (toInterest) {
-            return new ItemsHolder(LayoutInflater.from(context).inflate(R.layout.item_view_interest,parent,false));
+        if (items instanceof ItemCatalog) {
+            if (my_list) {
+                return new ItemsHolder(LayoutInflater.from(context).inflate(R.layout.my_item_view, parent, false));
+            } else if (toInterest) {
+                return new ItemsHolder(LayoutInflater.from(context).inflate(R.layout.item_view_interest, parent, false));
+            } else {
+                return new ItemsHolder(LayoutInflater.from(context).inflate(R.layout.item_view, parent, false));
+            }
         }
-        return new ItemsHolder(LayoutInflater.from(context).inflate(R.layout.item_view,parent,false));
+        return new ItemsHolder(LayoutInflater.from(context).inflate(R.layout.interests_view, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ItemsHolder holder, int position) {
+        if (items instanceof ItemCatalog) {
+            ItemCatalog itemCatalog = (ItemCatalog) items;
+            holder.titleView.setText(itemCatalog.getItem(position).getTitle());
+            holder.descriptionView.setText(itemCatalog.getItem(position).getDescription());
+            holder.priceView.setText(itemCatalog.getItem(position).getPriceString());
 
-        holder.titleView.setText(items.getItem(position).getTitle());
-        holder.descriptionView.setText(items.getItem(position).getDescription());
-        holder.priceView.setText(items.getItem(position).getPriceString());
 
-        //for regular home feed
-        if (holder.interestButton != null) {
-            holder.interestButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Snackbar.make(v, "Interest Button Clicked", Snackbar.LENGTH_LONG).show();
-                    ItemsAdapter.this.listener.uponInterest(items.getItem(holder.getAdapterPosition()));
-                }
-            });
+            //for regular home feed
+            if (holder.interestButton != null) {
+                holder.interestButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Snackbar.make(v, "Interest Button Clicked", Snackbar.LENGTH_LONG).show();
+                        ItemsAdapter.this.listener.uponInterest(itemCatalog.getItem(holder.getAdapterPosition()));
+                    }
+                });
+            }
+            //for my items feed
+            if (holder.editButton != null
+                    && holder.deleteButton != null
+                    && holder.viewInterestButton != null) {
+                holder.editButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Snackbar.make(v, "Edit Button Clicked", Snackbar.LENGTH_LONG).show();
+                        ItemsAdapter.this.listener.uponEdit(itemCatalog.getItem(holder.getAdapterPosition()));
+                    }
+                });
+                holder.viewInterestButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Snackbar.make(v, "Interests Button Clicked", Snackbar.LENGTH_LONG).show();
+                        ItemsAdapter.this.listener.uponViewInterest(itemCatalog.getItem(holder.getAdapterPosition()));
+                    }
+                });
+
+                holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Snackbar.make(v, "Delete Button Clicked", Snackbar.LENGTH_LONG).show();
+                        ItemsAdapter.this.listener.uponDeleteItem(itemCatalog.getItem(holder.getAdapterPosition()));
+                    }
+                });
+            }
+            //for to show interest form
+            if (holder.backButton != null
+                    && holder.confirmButton != null
+                    && holder.interestBar != null) {
+                holder.backButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ItemsAdapter.this.listener.uponHome();
+                    }
+                });
+                holder.confirmButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final Editable interestEditable = holder.interestBar.getText();
+                        final String interestStr = interestEditable.toString();
+
+                        if (interestStr.length() == 0) {
+                            Snackbar.make(v, "Invalid: Please make sure all fields are filled", Snackbar.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        ItemsAdapter.this.listener.uponConfirm(itemCatalog.getItem(holder.getAdapterPosition()), interestStr);
+                    }
+                });
+
+            }
         }
-        //for my items feed
-        if (holder.editButton != null
-                && holder.deleteButton != null
-                && holder.viewInterestButton != null) {
-            holder.editButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Snackbar.make(v, "Edit Button Clicked", Snackbar.LENGTH_LONG).show();
-                    ItemsAdapter.this.listener.uponEdit(items.getItem(holder.getAdapterPosition()));
-                }
-            });
-            holder.viewInterestButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Snackbar.make(v, "Interests Button Clicked", Snackbar.LENGTH_LONG).show();
-                    //start here
-                    //add item to param
-                    //make the item list comments be what shows in the home feed
-                    ItemsAdapter.this.listener.uponViewInterest();
-                }
-            });
+        if (items instanceof ItemInterestCatalog) {
+            ItemInterestCatalog interestCatalog = (ItemInterestCatalog) items;
+            holder.userEmailView.setText(interestCatalog.getItem(position).getUser().email);
+            holder.userInterestView.setText(interestCatalog.getItem(position).getInterest());
 
             holder.deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Snackbar.make(v, "Delete Button Clicked", Snackbar.LENGTH_LONG).show();
-                    ItemsAdapter.this.listener.uponDelete(items.getItem(holder.getAdapterPosition()));
+                    //this needs to make sure it deletes an interest in this scenario
+                    ItemsAdapter.this.listener.uponDeleteInterest(interestCatalog, holder.getAdapterPosition());
+
                 }
             });
-        }
-        //for to show interest form
-        if (holder.backButton != null
-                && holder.confirmButton != null
-                && holder.interestBar != null) {
-            holder.backButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ItemsAdapter.this.listener.uponHome();
-                }
-            });
-            holder.confirmButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final Editable interestEditable = holder.interestBar.getText();
-                    final String interestStr = interestEditable.toString();
-
-                    if (interestStr.length() == 0) {
-                        Snackbar.make(v, "Invalid: Please make sure all fields are filled", Snackbar.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    ItemsAdapter.this.listener.uponConfirm(items.getItem(holder.getAdapterPosition()), interestStr);
-                }
-            });
-
         }
     }
 
-        @Override
-        public int getItemCount () {
-            return items.length;
-        }
-
+    @Override
+    public int getItemCount() {
+        return items.getLength();
+    }
 }

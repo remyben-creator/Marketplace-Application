@@ -6,10 +6,12 @@ public interface IAccountView {
         public void uponLoginGoHome();
         public void uponBackToHome(boolean edit);
         public void uponCreateAccountGoHome();
-        public void uponLogout();
         public String getUserEmail();
         public boolean checkValidLogin(String userEmail, String userPassword);
         public boolean checkCreateAccount(String userEmail, String userPassword);
+        //logged in methods
+        public void uponLogout();
+        public void uponDelete();
     }
 
 

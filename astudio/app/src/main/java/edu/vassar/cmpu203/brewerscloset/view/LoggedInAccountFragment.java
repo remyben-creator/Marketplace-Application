@@ -60,6 +60,12 @@ public class LoggedInAccountFragment extends Fragment implements IAccountView{
                 LoggedInAccountFragment.this.listener.uponLogout();
             }
         });
+        this.binding.deleteButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoggedInAccountFragment.this.listener.uponDelete();
+            }
+        });
 
     }
 }

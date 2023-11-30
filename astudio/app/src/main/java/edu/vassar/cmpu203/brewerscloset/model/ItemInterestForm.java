@@ -11,4 +11,11 @@ public class ItemInterestForm {
         this.interest = interest;
     }
 
+    public User getUser(){
+        return this.user;
+    }
+    public String getInterest() {
+        return this.interest;
+    }
+
 }

@@ -69,15 +69,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/addItemButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Add Item"
-                android:backgroundTint="@color/vRed"/>
+            android:orientation="horizontal"
+            android:background="@color/black">
 
             <Button
                 android:id="@+id/homeButton"
@@ -85,10 +78,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Home"
-                android:backgroundTint="@color/black"/>
+                android:backgroundTint="@color/vRed"/>
 
             <Button
-                android:id="@+id/myItemsButton"
+                android:id="@+id/myItemsAddButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

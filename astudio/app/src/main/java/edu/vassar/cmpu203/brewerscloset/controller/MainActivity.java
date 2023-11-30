@@ -6,8 +6,11 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import edu.vassar.cmpu203.brewerscloset.model.Catalog;
 import edu.vassar.cmpu203.brewerscloset.model.Item;
 import edu.vassar.cmpu203.brewerscloset.model.ItemCatalog;
+import edu.vassar.cmpu203.brewerscloset.model.ItemInterestCatalog;
+import edu.vassar.cmpu203.brewerscloset.model.ItemInterestForm;
 import edu.vassar.cmpu203.brewerscloset.model.User;
 import edu.vassar.cmpu203.brewerscloset.model.UserCatalog;
 import edu.vassar.cmpu203.brewerscloset.view.AccountFragment;
@@ -66,8 +69,7 @@ public class MainActivity extends AppCompatActivity
     }
     public void uponMyItems() {
         // to be implemented with the addition of accounts
-        ItemCatalog myItems = this.user.myItems;
-        this.mainView.displayFragment(new HomeFeedFragment(this, myItems),false,"my item feed");
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.user.myItems),false,"my item feed");
     }
     public void uponAccount() {
         if (this.user.email.equals("Guest")) {
@@ -94,15 +96,20 @@ public class MainActivity extends AppCompatActivity
     public void uponEdit(Item item) {
         this.mainView.displayFragment(new AddItemFragment(this, true, item),false,"add item screen in edit");
     }
-    public void uponViewInterest() {}
+    public void uponViewInterest(Item item) {
+        this.mainView.displayFragment(new HomeFeedFragment(this, item.interests), false, "interests");
+        }
     public void uponInterest(Item item) {
         ItemCatalog itemInterest = new ItemCatalog();
         itemInterest.addItem(item);
         itemInterest.forInterest = true;
         this.mainView.displayFragment(new HomeFeedFragment(this, itemInterest), false, "home feed");
     }
-    public void uponDelete(Item item) {
-        this.mainView.displayFragment(new ConfirmDeleteFragment(this, item), false, "confirm delete page");
+    public void uponDeleteItem(Item item) {
+        this.mainView.displayFragment(new ConfirmDeleteFragment(this, item, null, -1, null), false, "confirm delete page");
+    }
+    public void uponDeleteInterest(ItemInterestCatalog interests, int index) {
+        this.mainView.displayFragment(new ConfirmDeleteFragment(this, null, interests, index, null), false, "confirm delete page");
     }
     public void uponConfirm(Item item, String interest) {
         this.user.addInterest(item, interest);
@@ -112,8 +119,7 @@ public class MainActivity extends AppCompatActivity
     //Add Item listener methods
     public void uponBackToHome(boolean edit) {
         if (edit) {
-            ItemCatalog myItems = this.user.myItems;
-            this.mainView.displayFragment(new HomeFeedFragment(this, myItems),false,"my item feed");
+            this.mainView.displayFragment(new HomeFeedFragment(this, this.user.myItems),false,"my item feed");
         }
         else {
             this.mainView.displayFragment(new HomeFeedFragment(this, this.items), false, "home feed");
@@ -127,8 +133,7 @@ public class MainActivity extends AppCompatActivity
         else {
         Item newItem = this.user.createItem(itemTitle, itemPrice, itemDesc, itemPics, this.user);
         this.items.addItem(newItem);
-        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");}
-
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.user.myItems),false,"home feed");}
 
     }
 
@@ -171,11 +176,6 @@ public class MainActivity extends AppCompatActivity
         }
         return false;
     }
-    public void uponLogout(){
-        this.user = new User("Guest", null);
-        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
-
-    }
     public void uponCreateAccountGoHome() {
         //to switch to home feed following an account creation
         this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
@@ -200,10 +200,32 @@ public class MainActivity extends AppCompatActivity
         ItemCatalog myItems = this.user.myItems;
         this.mainView.displayFragment(new HomeFeedFragment(this, myItems),false,"my item feed");
     }
-    public void uponConfirmDelete(Item item) {
+    public void uponConfirmDeleteItem(Item item) {
         this.user.deleteItem(item);
         this.items.removeItem(item);
         this.mainView.displayFragment(new HomeFeedFragment(this, this.user.myItems), false, "my item feed");
     }
+    public void uponConfirmDeleteInterest(ItemInterestCatalog interests, int index) {
+        ItemInterestForm interest = interests.getInterest(index);
+        interests.removeInterest(interest);
+        this.mainView.displayFragment(new HomeFeedFragment(this, interests), false, "interests");
+    }
+    public void uponConfirmDeleteUser() {
+        this.users.removeUser(this.user);
+        this.user = new User("Guest", null);
+        this.mainView.displayFragment(new AccountFragment(this), false, "account screen");
+    }
+    public void uponBackToInterests(ItemInterestCatalog interests) {
+        this.mainView.displayFragment(new HomeFeedFragment(this, interests), false, "interests");
+    }
+    //logged in account methods
+    public void uponLogout(){
+        this.user = new User("Guest", null);
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
+    }
+    public void uponDelete() {
+        this.mainView.displayFragment(new ConfirmDeleteFragment(this, null, null, -1, this.user), false, "confirm delete page");
+    }
+
 
 }

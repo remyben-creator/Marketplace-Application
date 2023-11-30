@@ -8,6 +8,7 @@
     tools:context=".view.AccountFragment">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -29,8 +30,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Logout"
-                android:backgroundTint="@color/vRed"/>
+                android:backgroundTint="@color/vRed"
+                android:text="Logout" />
         </LinearLayout>
 
         <LinearLayout
@@ -53,6 +54,13 @@
                 android:text="TextView" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/vRed"
+            android:text="Delete Account" />
 
     </LinearLayout>
 

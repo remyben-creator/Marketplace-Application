@@ -17,7 +17,9 @@ import com.google.android.material.snackbar.Snackbar;
 
 import edu.vassar.cmpu203.brewerscloset.databinding.FragmentHomeFeedBinding;
 import edu.vassar.cmpu203.brewerscloset.databinding.MyItemViewBinding;
+import edu.vassar.cmpu203.brewerscloset.model.Catalog;
 import edu.vassar.cmpu203.brewerscloset.model.ItemCatalog;
+import edu.vassar.cmpu203.brewerscloset.model.ItemInterestCatalog;
 
 
 /**
@@ -30,10 +32,11 @@ public class HomeFeedFragment extends Fragment implements IHomeFeedView{
     FragmentHomeFeedBinding binding;
     Listener listener;
 
-    ItemCatalog currentList;
+    //maybe make a list instead
+    Catalog currentList;
 
 
-    public HomeFeedFragment(@NonNull Listener listener, @NonNull ItemCatalog currentList){
+    public HomeFeedFragment(@NonNull Listener listener, @NonNull Catalog currentList){
         this.listener = listener;
         this.currentList = currentList;
     }
@@ -48,13 +51,24 @@ public class HomeFeedFragment extends Fragment implements IHomeFeedView{
         //somehow get the current list to get displayed in the scroller at this moment
         RecyclerView recyclerView = this.binding.itemCatalogWidget;
 
-        //making the recycler
+
+        //making the items recycler
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        if (this.listener.checkForMyItems(currentList)) {
-            recyclerView.setAdapter(new ItemsAdapter(this.getContext(), this.currentList, true, false, this.listener));
+        if (this.currentList instanceof ItemCatalog) {
+            if (this.listener.checkForMyItems((ItemCatalog) currentList)) {
+                recyclerView.setAdapter(new ItemsAdapter(this.getContext(), this.currentList, true, false, this.listener));
+            } else if (((ItemCatalog) this.currentList).forInterest) {
+                recyclerView.setAdapter(new ItemsAdapter(this.getContext(), this.currentList, false, true, this.listener));
+            } else {
+                recyclerView.setAdapter(new ItemsAdapter(this.getContext(), this.currentList, false, false, this.listener));
+            }
         }
-        if (this.currentList.forInterest) {recyclerView.setAdapter(new ItemsAdapter(this.getContext(), this.currentList, false, true, this.listener));}
-        else {recyclerView.setAdapter(new ItemsAdapter(this.getContext(), this.currentList, false, false, this.listener));}
+        //making the interests recycler
+        if (this.currentList instanceof ItemInterestCatalog) {
+            recyclerView.setAdapter(new ItemsAdapter(this.getContext(), this.currentList, false, false, this.listener));
+
+        }
+
 
         return this.binding.getRoot();
 
@@ -64,48 +78,58 @@ public class HomeFeedFragment extends Fragment implements IHomeFeedView{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        this.binding.searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(v, "Search Button was clicked", Snackbar.LENGTH_LONG).show();
+        if (this.currentList instanceof ItemCatalog) {
+            if (this.listener.checkForMyItems((ItemCatalog) currentList)) {
+                this.binding.myItemsAddButton.setText("Add Item");
+            }
 
-                //retrieve search string
-                final Editable SSEditable = HomeFeedFragment.this.binding.searchBar.getText();
-                final String SSStr = SSEditable.toString();
-                HomeFeedFragment.this.listener.uponSearch(SSStr);
-            }
-        });
-        this.binding.myItemsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(v, "My Items Button was clicked", Snackbar.LENGTH_LONG).show();
-                HomeFeedFragment.this.listener.uponMyItems();
-            }
-        });
-        this.binding.addItemButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (HomeFeedFragment.this.listener.loggedIn() == false) {
-                    Snackbar.make(v, "Cannot Add Items as Guest", Snackbar.LENGTH_LONG).show();
-                    return;
+            this.binding.searchButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Snackbar.make(v, "Search Button was clicked", Snackbar.LENGTH_LONG).show();
+
+                    //retrieve search string
+                    final Editable SSEditable = HomeFeedFragment.this.binding.searchBar.getText();
+                    final String SSStr = SSEditable.toString();
+                    HomeFeedFragment.this.listener.uponSearch(SSStr);
                 }
-                Snackbar.make(v, "Add Item Button was clicked", Snackbar.LENGTH_LONG).show();
-                HomeFeedFragment.this.listener.uponAddItem();
+            });
+            if (this.binding.myItemsAddButton.getText().equals("Add Item")) {
+                this.binding.myItemsAddButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        HomeFeedFragment.this.listener.uponAddItem();
+                    }
+
+                });
+            } else {
+                this.binding.myItemsAddButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (HomeFeedFragment.this.listener.loggedIn() == false) {
+                            Snackbar.make(v, "Error: Logged in as Guest", Snackbar.LENGTH_LONG).show();
+                            return;
+                        }
+                        Snackbar.make(v, "My Items Button was clicked", Snackbar.LENGTH_LONG).show();
+                        HomeFeedFragment.this.listener.uponMyItems();
+                    }
+
+                });
             }
-        });
-        this.binding.accountButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(v, "Account Button was clicked", Snackbar.LENGTH_LONG).show();
-                HomeFeedFragment.this.listener.uponAccount();
-            }
-        });
-        this.binding.homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(v, "Returning to Home Feed", Snackbar.LENGTH_LONG).show();
-                HomeFeedFragment.this.listener.uponHome();
-            }
-        });
+            this.binding.accountButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Snackbar.make(v, "Account Button was clicked", Snackbar.LENGTH_LONG).show();
+                    HomeFeedFragment.this.listener.uponAccount();
+                }
+            });
+            this.binding.homeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Snackbar.make(v, "Returning to Home Feed", Snackbar.LENGTH_LONG).show();
+                    HomeFeedFragment.this.listener.uponHome();
+                }
+            });
+        }
     }
 }

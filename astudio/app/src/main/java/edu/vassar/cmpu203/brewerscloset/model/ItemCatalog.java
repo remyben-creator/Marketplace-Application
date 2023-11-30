@@ -10,7 +10,7 @@ import java.util.ListIterator;
  * Model class that aggregates posts
  */
 
-public class ItemCatalog {
+public class ItemCatalog implements Catalog{
     public int length;
     public List<Item> items;
     public boolean forInterest;
@@ -21,19 +21,27 @@ public class ItemCatalog {
         this.forInterest = false;
     }
 
+    public int getLength() {return this.length;}
+
     public void addItem(Item item) {
         items.add(item);
         this.length++;
     }
 
-    public void removeItem(Item item) {
-        items.remove(item);
+    public void removeItem(Item toRemove) {
+        Iterator<Item> iterator = items.iterator();
+
+        while (iterator.hasNext()) {
+            Item element = iterator.next();
+            if (element.equals(toRemove)) {
+                iterator.remove();
+            }
+        }
         this.length--;
     }
 
-    public List<Item> getItems() {
-        return this.items;
-    }
+    public List<Item> getList() {return this.items;}
+    @Override
 
     public Item getItem(int index) {
         //get single item
