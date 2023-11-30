@@ -29,7 +29,13 @@ public class User {
         return false;
     }
 
-    public void editItem() {
+    public void editItem(Item item,String title, Double price, String description, String pictures) {
         // for a user to edit an item that has been listed
+        item.setTitle(title);
+        item.setPrice(price);
+        item.setDescription(description);
+    }
+    public void deleteItem(Item item) {
+        myItems.removeItem(item);
     }
 }

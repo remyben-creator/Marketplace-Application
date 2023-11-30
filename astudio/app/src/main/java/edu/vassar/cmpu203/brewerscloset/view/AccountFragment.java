@@ -17,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import edu.vassar.cmpu203.brewerscloset.R;
 import edu.vassar.cmpu203.brewerscloset.databinding.FragmentAccountBinding;
+import edu.vassar.cmpu203.brewerscloset.model.Item;
 import edu.vassar.cmpu203.brewerscloset.model.Moderator;
 
 /**
@@ -66,7 +67,7 @@ public class AccountFragment extends Fragment implements IAccountView{
                     Snackbar.make(v, "Invalid User: Please make sure all fields are filled", Snackbar.LENGTH_LONG).show();
                     return;
                 }
-                if (!AccountFragment.this.listener.checkValidLogin(userEmailStr, userPasswordStr)) {
+                if (AccountFragment.this.listener.checkValidLogin(userEmailStr, userPasswordStr) == false) {
                     Snackbar.make(v, "Invalid User: Check username and password", Snackbar.LENGTH_LONG).show();
                     return;
                 }

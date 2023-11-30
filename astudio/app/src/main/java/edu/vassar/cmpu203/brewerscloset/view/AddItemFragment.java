@@ -22,6 +22,7 @@ import java.net.URI;
 
 import edu.vassar.cmpu203.brewerscloset.R;
 import edu.vassar.cmpu203.brewerscloset.databinding.FragmentAddItemBinding;
+import edu.vassar.cmpu203.brewerscloset.model.Item;
 import edu.vassar.cmpu203.brewerscloset.model.Moderator;
 
 /**
@@ -33,9 +34,13 @@ public class AddItemFragment extends Fragment implements IAddItemView{
 
     Listener listener;
     Moderator moderator;
+    boolean edit;
+    Item editItem;
 
-    public AddItemFragment(@NonNull Listener listener){
+    public AddItemFragment(@NonNull Listener listener, boolean edit, Item editItem){
         this.listener = listener;
+        this.edit = edit;
+        this.editItem = editItem;
     }
 
     @Override
@@ -48,6 +53,12 @@ public class AddItemFragment extends Fragment implements IAddItemView{
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (edit == true && editItem != null) {
+            this.binding.titleBar.setText(this.editItem.getTitle());
+            this.binding.priceBar.setText(this.editItem.getPriceString());
+            this.binding.descriptionBar.setText(this.editItem.getDescription());
+        }
 
         this.binding.backButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -106,7 +117,7 @@ public class AddItemFragment extends Fragment implements IAddItemView{
 
 
                 //notify listener
-                AddItemFragment.this.listener.uponPost(itemTitleStr, itemPrice, itemDescStr, null);
+                AddItemFragment.this.listener.uponPost(editItem, itemTitleStr, itemPrice, itemDescStr, null, edit);
             }
         });
     }

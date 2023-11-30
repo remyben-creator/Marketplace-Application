@@ -23,37 +23,12 @@ public class ItemsHolder extends RecyclerView.ViewHolder {
         this.descriptionView = itemView.findViewById(R.id.itemDescription);
         this.priceView = itemView.findViewById(R.id.itemPrice);
 
-        if (itemView.findViewById(R.id.interestButton) != null) {
-            this.interestButton = itemView.findViewById(R.id.interestButton);
-            this.interestButton.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    Snackbar.make(v, "Interest Button Clicked", Snackbar.LENGTH_LONG).show();
-                }
-            });
-        }
+        this.editButton = itemView.findViewById(R.id.editButton);
+        this.deleteButton = itemView.findViewById(R.id.deleteButton);
+        this.viewInterestButton = itemView.findViewById(R.id.viewInterestButton);
 
-        if (itemView.findViewById(R.id.editButton) != null
-                && itemView.findViewById(R.id.deleteButton) != null
-                    && itemView.findViewById(R.id.viewInterestButton) != null) {
-            this.editButton = itemView.findViewById(R.id.editButton);
-            this.deleteButton = itemView.findViewById(R.id.deleteButton);
-            this.viewInterestButton = itemView.findViewById(R.id.viewInterestButton);
+        this.interestButton = itemView.findViewById(R.id.interestButton);
 
-            this.editButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Snackbar.make(v, "Edit Button Clicked", Snackbar.LENGTH_LONG).show();
-                }
-            });
 
-            this.deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Snackbar.make(v, "Delete Button Clicked", Snackbar.LENGTH_LONG).show();
-                }
-            });
-
-        }
     }
 }

@@ -12,8 +12,10 @@ import edu.vassar.cmpu203.brewerscloset.model.User;
 import edu.vassar.cmpu203.brewerscloset.model.UserCatalog;
 import edu.vassar.cmpu203.brewerscloset.view.AccountFragment;
 import edu.vassar.cmpu203.brewerscloset.view.AddItemFragment;
+import edu.vassar.cmpu203.brewerscloset.view.ConfirmDeleteFragment;
 import edu.vassar.cmpu203.brewerscloset.view.HomeFeedFragment;
 import edu.vassar.cmpu203.brewerscloset.view.IAccountView;
+import edu.vassar.cmpu203.brewerscloset.view.IConfirmDeleteView;
 import edu.vassar.cmpu203.brewerscloset.view.IMainView;
 import edu.vassar.cmpu203.brewerscloset.view.LoggedInAccountFragment;
 import edu.vassar.cmpu203.brewerscloset.view.MainView;
@@ -28,7 +30,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 
 public class MainActivity extends AppCompatActivity
-    implements IAddItemView.Listener, IHomeFeedView.Listener, IAccountView.Listener {
+    implements IAddItemView.Listener, IHomeFeedView.Listener, IAccountView.Listener, IConfirmDeleteView.Listener {
 
     ItemCatalog items;
     User user;
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity
 
     //Home feed listener methods
     public void uponAddItem() {
-        this.mainView.displayFragment(new AddItemFragment(this),false,"add item screen");
+        this.mainView.displayFragment(new AddItemFragment(this, false, null),false,"add item screen");
     }
     public void uponSearch(String searchString) {
         ItemCatalog searchItems = this.items.searchResult(searchString);
@@ -86,6 +88,14 @@ public class MainActivity extends AppCompatActivity
         if (items.equals(this.user.myItems)) {return true;}
         return false;
     }
+    public void uponEdit(Item item) {
+        this.mainView.displayFragment(new AddItemFragment(this, true, item),false,"add item screen in edit");
+    }
+    public void uponViewInterest() {}
+    public void uponInterest() {}
+    public void uponDelete(Item item) {
+        this.mainView.displayFragment(new ConfirmDeleteFragment(this, item), false, "confirm delete page");
+    }
 
     //Add Item listener methods
     public void uponBackToHome() {
@@ -94,9 +104,14 @@ public class MainActivity extends AppCompatActivity
     public void uponHome() {
         this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
     }
-    public void uponPost(String itemTitle, Double itemPrice, String itemDesc, String itemPics) {
-        Item item = this.user.createItem(itemTitle, itemPrice, itemDesc, itemPics, this.user);
-        this.items.addItem(item);
+    public void uponPost(Item item, String itemTitle, Double itemPrice, String itemDesc, String itemPics, boolean edit) {
+        if (edit) {
+            this.user.editItem(item, itemTitle, itemPrice, itemDesc, itemPics);
+        }
+        else {
+        Item newItem = this.user.createItem(itemTitle, itemPrice, itemDesc, itemPics, this.user);
+        this.items.addItem(newItem);}
+
         this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
     }
 
@@ -133,9 +148,8 @@ public class MainActivity extends AppCompatActivity
     public boolean checkValidLogin(String userEmail, String userPassword) {
         //user params to check a user login
         //and puts the user as current user if correct
-        User localUser = this.users.loginUser(userEmail, userPassword);
-        if (user != null) {
-            this.user = localUser;
+        if (this.users.loginUser(userEmail, userPassword) != null) {
+            this.user = this.users.loginUser(userEmail, userPassword);
             return true;
         }
         return false;
@@ -163,6 +177,16 @@ public class MainActivity extends AppCompatActivity
     }
     public String getUserEmail() {
         return this.user.email;
+    }
+    //confirm delete listener methods
+    public void uponBackToMyItems() {
+        ItemCatalog myItems = this.user.myItems;
+        this.mainView.displayFragment(new HomeFeedFragment(this, myItems),false,"my item feed");
+    }
+    public void uponConfirmDelete(Item item) {
+        this.user.deleteItem(item);
+        this.items.removeItem(item);
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.user.myItems), false, "my item feed");
     }
 
 }

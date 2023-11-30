@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.google.android.material.snackbar.Snackbar;
 
 import edu.vassar.cmpu203.brewerscloset.databinding.FragmentHomeFeedBinding;
+import edu.vassar.cmpu203.brewerscloset.databinding.MyItemViewBinding;
 import edu.vassar.cmpu203.brewerscloset.model.ItemCatalog;
 
 
@@ -50,9 +51,9 @@ public class HomeFeedFragment extends Fragment implements IHomeFeedView{
         //making the recycler
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         if (this.listener.checkForMyItems(currentList)) {
-            recyclerView.setAdapter(new ItemsAdapter(this.getContext(), this.currentList, true));
+            recyclerView.setAdapter(new ItemsAdapter(this.getContext(), this.currentList, true, this.listener));
         }
-        else {recyclerView.setAdapter(new ItemsAdapter(this.getContext(), this.currentList, false));}
+        else {recyclerView.setAdapter(new ItemsAdapter(this.getContext(), this.currentList, false, this.listener));}
 
         return this.binding.getRoot();
 

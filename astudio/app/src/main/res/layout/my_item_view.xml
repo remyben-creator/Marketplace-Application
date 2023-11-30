@@ -46,14 +46,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Edit Item"
-                android:backgroundTint="@color/vRed"/>
+                android:backgroundTint="@color/black"/>
 
             <Button
                 android:id="@+id/viewInterestButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="View Interest" />
+                android:text="View Interest"
+                android:backgroundTint="@color/vRed"/>
 
             <Button
                 android:id="@+id/deleteButton"
@@ -61,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Delete"
-                android:backgroundTint="@color/vRed"/>
+                android:backgroundTint="@color/black"/>
 
         </LinearLayout>
     </LinearLayout>
