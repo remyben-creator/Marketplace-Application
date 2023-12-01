@@ -11,11 +11,13 @@ public class User {
     public String email;
     public String password;
     public ItemCatalog myItems;
+    public ItemInterestCatalog myInterests;
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
         this.myItems = new ItemCatalog();
+        this.myInterests = new ItemInterestCatalog(null);
     }
 
     public Item createItem(String title, Double price, String description, String pictures, User seller) {
@@ -35,14 +37,28 @@ public class User {
         item.setPrice(price);
         item.setDescription(description);
     }
-    public void deleteItem(Item item) {
-        myItems.removeItem(item);
-    }
 
     public void addInterest(Item item, String interest) {
-        item.interests.addInterest(new ItemInterestForm(this, item, interest));
+        ItemInterestForm itemInterest = new ItemInterestForm(this, item,interest);
+        item.interests.addInterest(itemInterest);
+        this.myInterests.addInterest(itemInterest);
     }
-    public void removeInterest(Item item, String interest) {
-        item.interests.removeInterest(new ItemInterestForm(this, item, interest));
+    public void deleteInterest(ItemInterestForm interest) {
+        interest.item.interests.removeInterest(interest);
+        myInterests.removeInterest(interest);
+    }
+    public void deleteItem(ItemCatalog items, Item item) {
+        items.removeItem(item);
+        this.myItems.removeItem(item);
+    }
+    public void deleteUserStuff(ItemCatalog items) {
+        for (int i = 0; i < myInterests.length; i++) {
+            this.deleteInterest(myInterests.getInterest(i));
+            i--;
+        }
+        for (int i = 0; i < myItems.length; i++) {
+            this.deleteItem(items, myItems.getItem(i));
+            i--;
+        }
     }
 }

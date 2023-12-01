@@ -201,8 +201,7 @@ public class MainActivity extends AppCompatActivity
         this.mainView.displayFragment(new HomeFeedFragment(this, myItems),false,"my item feed");
     }
     public void uponConfirmDeleteItem(Item item) {
-        this.user.deleteItem(item);
-        this.items.removeItem(item);
+        this.user.deleteItem(this.items, item);
         this.mainView.displayFragment(new HomeFeedFragment(this, this.user.myItems), false, "my item feed");
     }
     public void uponConfirmDeleteInterest(ItemInterestCatalog interests, int index) {
@@ -211,7 +210,7 @@ public class MainActivity extends AppCompatActivity
         this.mainView.displayFragment(new HomeFeedFragment(this, interests), false, "interests");
     }
     public void uponConfirmDeleteUser() {
-        this.users.removeUser(this.user);
+        this.users.removeUser(this.user, this.items);
         this.user = new User("Guest", null);
         this.mainView.displayFragment(new AccountFragment(this), false, "account screen");
     }

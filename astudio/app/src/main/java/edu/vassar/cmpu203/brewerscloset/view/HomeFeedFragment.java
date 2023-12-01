@@ -81,7 +81,7 @@ public class HomeFeedFragment extends Fragment implements IHomeFeedView{
         if (this.currentList instanceof ItemCatalog) {
             if (this.listener.checkForMyItems((ItemCatalog) currentList)) {
                 this.binding.myItemsAddButton.setText("Add Item");
-            }
+            }}
 
             this.binding.searchButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -130,6 +130,6 @@ public class HomeFeedFragment extends Fragment implements IHomeFeedView{
                     HomeFeedFragment.this.listener.uponHome();
                 }
             });
-        }
+
     }
 }

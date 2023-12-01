@@ -36,7 +36,8 @@ public class UserCatalog implements Catalog{
         this.length++;
     }
 
-    public void removeUser(User toRemove) {
+    public void removeUser(User toRemove, ItemCatalog items) {
+        toRemove.deleteUserStuff(items);
         Iterator<User> iterator = users.iterator();
 
         while (iterator.hasNext()) {
