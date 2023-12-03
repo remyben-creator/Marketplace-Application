@@ -7,31 +7,27 @@
 ### Preconditions:
 - All students currently attend Vassar College
 ### Postconditions:
-- System confirms email address is valid
 - User is granted access once they create their account
+- Created account can be deleted at a later date
 
 ```plantuml
 |User|
 start
-:Signs up to use the Marketplace;
+:Opens the application;
 |System|
 while (account-info-complete-and-valid) is (no)
 if (account-info-incomplete) then (yes)
 :Display account info form;
 |User|
-:Inputs email, name;
+:Inputs email, name, creates password;
 |System|
 else(no)
 :display "email or name could not be validated, please try again";
 endif 
 endwhile(yes)
 |System|
-:Display "Email and name have been successfully verified!";
-:Prompt for password creation; 
-|User|
-:Input password;
-|System|
 :Display "Account has been successfully created. Happy browsing!";
+:Adds User to UserCatalog;
 Stop
 @enduml
 ```

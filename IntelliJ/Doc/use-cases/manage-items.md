@@ -9,24 +9,24 @@ in their postings, and change their desired price.
 ### Preconditions:
 - Seller has posted an item
 ### Postconditions:
-- Items the seller takes down are removed from the database
-- Users see the updated price the seller inputs
-- System accurately shows the number of interested buyers
+- Items the seller takes down are no longer visible to users
+- Following confirmation, all changes are visible to all users
 ```plantuml
 |User|
 start
 :Visits manage items screen;
 |System|
-:Displays posted items;
+:Displays posted items with possible managing options;
 |User|
-Selects the item they would like to edit;
+:Scrolls to the item and clicks what they want to manage;
 |System| 
-Displays edit item form;
-switch (Desired action?)
-    case (Confirm Changes)
-        :Execute __edit-item__;
-    case (Go Back)
-        :Display posted items;
+switch (Desired Action?)
+    case (edit-item)
+        :execute __add-item__;
+    case (view-interest)
+        :Execute __view-interest-subfunc__;
+    case (delete-item)
+        :execute __delete_item_subfunc__;
 endswitch
 Stop
 @enduml

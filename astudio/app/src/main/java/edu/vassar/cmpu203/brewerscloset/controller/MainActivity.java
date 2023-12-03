@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity
 
         //start with no login info
         this.user = new User("Guest", null);
+        
+        //start with 
 
         //create main view object
         mainView = new MainView(this);
