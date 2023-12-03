@@ -30,7 +30,7 @@ public class ConfirmDeleteFragment extends Fragment implements IConfirmDeleteVie
     int deleteIndex;
     User user;
 
-    public ConfirmDeleteFragment(@NonNull Listener listener, Object object, ItemInterestCatalog interests, int deleteIndex, User user){
+    public ConfirmDeleteFragment(@NonNull Listener listener, Item item, ItemInterestCatalog interests, int deleteIndex, User user){
         this.listener = listener;
         this.item = item;
         this.interests = interests;

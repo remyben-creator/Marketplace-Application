@@ -24,7 +24,7 @@ public class ItemCatalog implements Catalog{
     public int getLength() {return this.length;}
 
     public void addItem(Item item) {
-        items.add(item);
+        this.items.add(item);
         this.length++;
     }
 
