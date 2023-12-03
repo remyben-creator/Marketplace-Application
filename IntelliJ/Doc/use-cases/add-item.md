@@ -7,9 +7,9 @@ their good
 - **Buyers:** Want to increase the supply of goods listed on the server, so they have more options to choose from.
 ### Preconditions:
 - Users have created an account
-- Good posted isn't included on the banned items list
 ### Postconditions:
 - Once item is listed, all users are able to see / search for it.
+- Said item can be managed at any time
 
 
 ```plantuml
@@ -17,14 +17,14 @@ their good
 |User|
 start
 :Has an item they would like to sell;
-while (item-complete-and-valid) is (no)
+while (item-complete-and-validated) is (no)
 |System|
-if (item-invalid?) then (yes)
-:Display "Item could not be posted due to explicit content, please try again";
+if (item-invalid?) then (yes) 
+: Execute __ validate-item__;
 else (no)
 :Displays new item form;
 |User|
-:Inputs item name, selects category, inputs description, price, pictures;
+:Inputs item name, description, price, pictures;
 endif
 endwhile (yes) 
 |System|
