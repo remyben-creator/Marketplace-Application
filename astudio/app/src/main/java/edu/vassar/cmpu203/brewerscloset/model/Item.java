@@ -1,14 +1,23 @@
 package edu.vassar.cmpu203.brewerscloset.model;
 
+import androidx.annotation.NonNull;
+
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a single item
  */
-public class Item {
-    public int serialNumber;
+public class Item implements java.io.Serializable{
+    private static final String TITLE = "title";
+    private static final String DESCRIPTION = "description";
+    private static final String PRICE = "price";
+    private static final String PICTURES = "pictures";
+    private static final String SELLER = "seller";
+    private static final String INTERESTS = "interests";
     public String title;
     public String description;
     public Double price;
@@ -18,7 +27,6 @@ public class Item {
     public ItemInterestCatalog interests;
 
     public Item(String title, Double price, String description, String pictures, User seller) {
-        this.serialNumber = 0;
         this.title = title;
         this.description = description;
         this.price = price;
@@ -60,6 +68,42 @@ public class Item {
     }
     public void setSeller(User seller) {
         this.seller = seller;
+    }
+
+    //data persistence mapping functions
+    /**
+     * return a map with the sales contents
+     */
+    @NonNull
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+
+        //write String title, Double price, String description, String pictures, User seller
+        map.put(TITLE, this.title);
+        map.put(DESCRIPTION, this.description);
+        map.put(PRICE, this.price);
+        map.put(PICTURES, this.pictures);
+        map.put(SELLER, this.seller.toMap());
+        map.put(INTERESTS, this.interests.toMap());
+
+        return map;
+    }
+    /**
+     * Creates and returns a Sales from a previously created string to object map
+     */
+    @NonNull
+    public static Item fromMap(@NonNull Map<String, Object> map) {
+        Item item = new Item(null, null, null, null, null);
+
+        //add String title, Double price, String description, String pictures, User seller
+        item.title = (String) map.get(TITLE);
+        item.description = (String) map.get(DESCRIPTION);
+        item.price = (Double) map.get(PRICE);
+        item.pictures = (String) map.get(PICTURES);
+        item.seller = User.fromMap((Map<String, Object>)map.get(SELLER));
+        item.interests = ItemInterestCatalog.fromMap((Map<String, Object>)map.get(INTERESTS));
+
+        return item;
     }
 
 }
