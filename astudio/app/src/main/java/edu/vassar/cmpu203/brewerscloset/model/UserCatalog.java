@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.UUID;
 
 public class UserCatalog implements Catalog{
     public int length;
@@ -68,6 +69,18 @@ public class UserCatalog implements Catalog{
         while (iterator.hasNext()) {
             User current = iterator.next();
             if (current.email.equals(userEmail)) {
+                return current;
+            }
+        }
+        return null;
+    }
+    public User getItemFromID(UUID id) {
+        //get single item
+        ListIterator<User> iterator = this.users.listIterator();
+
+        while (iterator.hasNext()) {
+            User current = iterator.next();
+            if (current.id.equals(id)) {
                 return current;
             }
         }

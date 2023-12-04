@@ -4,16 +4,17 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.UUID;
 
 public class ItemInterestCatalog implements Catalog{
     public int length;
     public List<ItemInterestForm> interests;
-    public Item item;
+    public UUID item;
 
     public ItemInterestCatalog(Item item) {
         this.length = 0;
         this.interests = new LinkedList<>();
-        this.item = item;
+        this.item = item.id;
     }
 
     public void addInterest(ItemInterestForm interest) {
@@ -62,6 +63,18 @@ public class ItemInterestCatalog implements Catalog{
                 return current;
             }
             counter++;
+        }
+        return null;
+    }
+    public ItemInterestForm getItemFromID(UUID id) {
+        //get single item
+        ListIterator<ItemInterestForm> iterator = this.interests.listIterator();
+
+        while (iterator.hasNext()) {
+            ItemInterestForm current = iterator.next();
+            if (current.id.equals(id)) {
+                return current;
+            }
         }
         return null;
     }

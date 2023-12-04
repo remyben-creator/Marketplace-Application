@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Represents a single item
@@ -23,16 +24,18 @@ public class Item implements java.io.Serializable{
     public Double price;
     //both types below will need to be changed soon
     public String pictures;
-    public User seller;
+    public UUID seller;
     public ItemInterestCatalog interests;
+    public UUID id;
 
     public Item(String title, Double price, String description, String pictures, User seller) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.pictures = pictures;
-        this.seller = seller;
+        this.seller = seller.id;
         this.interests = new ItemInterestCatalog(this);
+        this.id = UUID.randomUUID();
     }
 
     // Define methods for posts
@@ -63,11 +66,11 @@ public class Item implements java.io.Serializable{
         this.price = price;
     }
 
-    public User getSeller() {
-        return this.seller;
+    public User getSeller(UserCatalog users) {
+        return users.getItemFromID(this.seller);
     }
     public void setSeller(User seller) {
-        this.seller = seller;
+        this.seller = seller.id;
     }
 
     //data persistence mapping functions

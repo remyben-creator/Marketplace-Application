@@ -3,6 +3,7 @@ package edu.vassar.cmpu203.brewerscloset.model;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Represents a single user account
@@ -12,12 +13,14 @@ public class User {
     public String password;
     public ItemCatalog myItems;
     public ItemInterestCatalog myInterests;
+    public UUID id;
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
         this.myItems = new ItemCatalog();
         this.myInterests = new ItemInterestCatalog(null);
+        this.id = UUID.randomUUID();
     }
 
     public Item createItem(String title, Double price, String description, String pictures, User seller) {
@@ -43,8 +46,9 @@ public class User {
         item.interests.addInterest(itemInterest);
         this.myInterests.addInterest(itemInterest);
     }
-    public void deleteInterest(ItemInterestForm interest) {
-        interest.item.interests.removeInterest(interest);
+    public void deleteInterest(ItemCatalog items, ItemInterestForm interest) {
+        Item item = items.getItemFromID(interest.item);
+        item.interests.removeInterest(interest);
         myInterests.removeInterest(interest);
     }
     public void deleteItem(ItemCatalog items, Item item) {
@@ -53,7 +57,7 @@ public class User {
     }
     public void deleteUserStuff(ItemCatalog items) {
         for (int i = 0; i < myInterests.length; i++) {
-            this.deleteInterest(myInterests.getInterest(i));
+            this.deleteInterest(items, myInterests.getItem(i));
             i--;
         }
         for (int i = 0; i < myItems.length; i++) {
@@ -61,4 +65,5 @@ public class User {
             i--;
         }
     }
+
 }

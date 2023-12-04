@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.UUID;
 
 /**
  * Represents the main model class
@@ -84,6 +85,18 @@ public class ItemCatalog implements Catalog{
             }
         }
         return searchItems;
+    }
+    public Item getItemFromID(UUID id) {
+        //get single item
+        ListIterator<Item> iterator = this.items.listIterator();
+
+        while (iterator.hasNext()) {
+            Item current = iterator.next();
+            if (current.id.equals(id)) {
+                return current;
+            }
+        }
+        return null;
     }
 
 
