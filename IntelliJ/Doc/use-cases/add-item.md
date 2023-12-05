@@ -19,8 +19,8 @@ start
 :Has an item they would like to sell;
 while (item-complete-and-validated) is (no)
 |System|
-if (item-invalid?) then (yes) 
-: Execute __ validate-item__;
+if (item-valid?) then (yes) 
+: Execute __ is-Banned __;
 else (no)
 :Displays new item form;
 |User|
