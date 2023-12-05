@@ -50,13 +50,14 @@ public class UserCatalog implements Catalog{
         this.length--;
     }
 
-    public User loginUser(String userEmail, String userPassword) {
+    public User loginUser(String userEmail, String userPassword, ItemCatalog items) {
         //get single item
         ListIterator<User> iterator = this.users.listIterator();
 
         while (iterator.hasNext()) {
             User current = iterator.next();
             if (current.email.equals(userEmail) && current.password.equals(userPassword)) {
+                current.genMyItems(items);
                 return current;
             }
         }

@@ -1,16 +1,26 @@
 package edu.vassar.cmpu203.brewerscloset.model;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
  * Represents a single user account
  */
 public class User {
+    private static final String EMAIL = "email";
+    private static final String PASSWORD = "password";
+    private static final String MYITEMS = "myItems";
+    private static final String MYINTERESTS = "myInterests";
+    private static final String ID = "id";
     public String email;
     public String password;
+    public List<UUID> myItemsIds;
     public ItemCatalog myItems;
     public ItemInterestCatalog myInterests;
     public UUID id;
@@ -18,9 +28,13 @@ public class User {
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+        this.myItemsIds = new LinkedList<UUID>();
         this.myItems = new ItemCatalog();
         this.myInterests = new ItemInterestCatalog(null);
         this.id = UUID.randomUUID();
+    }
+    public void genMyItems(ItemCatalog items) {
+        for (UUID id : myItemsIds) this.myItems.addItem(items.getItemFromID(id));
     }
 
     public Item createItem(String title, Double price, String description, String pictures, User seller) {
@@ -66,4 +80,35 @@ public class User {
         }
     }
 
+    @NonNull
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+
+        map.put(EMAIL, this.email);
+        map.put(PASSWORD, this.password);
+        map.put(ID, this.id);
+        map.put(MYINTERESTS, this.myInterests.toMap());
+
+        //use the ids of items and interests in myitems and myinterests
+        List<UUID> myItemsIds = new LinkedList<>();
+        for (Item item : this.myItems.items)  myItemsIds.add(item.id);
+        map.put(MYITEMS, myItemsIds);
+
+        return map;
+    }
+
+    @NonNull
+    public static User fromMap(@NonNull Map<String, Object> map) {
+        User user = new User(null, null);
+
+        user.email = (String) map.get(EMAIL);
+        user.password = (String) map.get(PASSWORD);
+        user.id = (UUID) map.get(ID);
+        user.myInterests = (ItemInterestCatalog.fromMap(map));
+
+        List<UUID> myItemsIds = (List<UUID>) map.get(MYITEMS);
+        for (UUID itemId : myItemsIds) user.myItemsIds.add(itemId);
+
+        return user;
+    }
 }

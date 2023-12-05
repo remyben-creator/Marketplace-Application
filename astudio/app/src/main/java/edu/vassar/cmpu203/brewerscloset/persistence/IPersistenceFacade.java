@@ -1,18 +1,16 @@
-package edu.vassar.cmpu203.brewerscloset.persistance;
+package edu.vassar.cmpu203.brewerscloset.persistence;
 
 import androidx.annotation.NonNull;
 
 import edu.vassar.cmpu203.brewerscloset.model.ItemCatalog;
 import edu.vassar.cmpu203.brewerscloset.model.Item;
-import edu.vassar.cmpu203.brewerscloset.model.ItemInterestForm;
-import edu.vassar.cmpu203.brewerscloset.model.ItemInterestCatalog;
 import edu.vassar.cmpu203.brewerscloset.model.User;
 import edu.vassar.cmpu203.brewerscloset.model.UserCatalog;
 
 /** interface that specifies a contract that all persistance soluctions must fulfill
  *
  */
-public interface IPersistanceFacade {
+public interface IPersistenceFacade {
     /**
      * Interface that classes interested ion being notified of data-genrating events
      * from the persistence layer should implement
@@ -33,7 +31,6 @@ public interface IPersistanceFacade {
      * Issues an ItemCatalog retrieval operation
      * @param listener the observer to be notified of query result
      */
-    void retrieveItemCatalog(@NonNull Listener listener);
-    void retrieveUserCatalog(@NonNull Listener listener);
+    void retrieveCatalogs(@NonNull Listener listener);
 }
 

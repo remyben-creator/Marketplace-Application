@@ -1,20 +1,30 @@
 package edu.vassar.cmpu203.brewerscloset.model;
 
+import androidx.annotation.NonNull;
+
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.UUID;
 
-public class ItemInterestCatalog implements Catalog{
+public class ItemInterestCatalog implements Catalog, java.io.Serializable{
+    public static final String INTERESTS = "interests";
+    public static final String LENGTH = "length";
+    public static final String ITEM = "item";
+    public static final String ID = "id";
     public int length;
     public List<ItemInterestForm> interests;
     public UUID item;
+    public UUID id;
 
     public ItemInterestCatalog(Item item) {
         this.length = 0;
         this.interests = new LinkedList<>();
         this.item = item.id;
+        this.id = UUID.randomUUID();
     }
 
     public void addInterest(ItemInterestForm interest) {
@@ -78,4 +88,34 @@ public class ItemInterestCatalog implements Catalog{
         }
         return null;
     }
+
+    @NonNull
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+
+        List<Map<String, Object>> interestList = new LinkedList<>();
+        for (ItemInterestForm interest : this.interests) interestList.add(interest.toMap());
+        map.put(INTERESTS, interestList);
+        map.put(LENGTH, this.length);
+        map.put(ITEM, this.item);
+        map.put(ID, this.id);
+
+        return map;
+    }
+
+    @NonNull
+    public static ItemInterestCatalog fromMap(@NonNull Map<String, Object> map) {
+        ItemInterestCatalog interests = new ItemInterestCatalog(null);
+
+        interests.length = (int) map.get(LENGTH);
+        interests.id = (UUID) map.get(ID);
+        interests.item = (UUID) map.get(ITEM);
+
+        List<Map<String, Object>> interestMapList = (List<Map<String, Object>>) map.get(INTERESTS);
+        for (Map<String, Object> interestMap : interestMapList)
+            interests.interests.add(ItemInterestForm.fromMap(interestMap));
+
+        return interests;
+    }
+
 }
