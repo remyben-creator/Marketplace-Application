@@ -86,7 +86,7 @@ public class ItemCatalog implements Catalog{
         }
         return searchItems;
     }
-    public Item getItemFromID(UUID id) {
+    public Item getItemFromID(String id) {
         //get single item
         ListIterator<Item> iterator = this.items.listIterator();
 

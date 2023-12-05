@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "489518811922",
+    "project_id": "brewerscloset-fe649",
+    "storage_bucket": "brewerscloset-fe649.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:489518811922:android:bed585a389233920a401cb",
+        "android_client_info": {
+          "package_name": "edu.vassar.cmpu203.brewerscloset"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcCtjvAbEsZrgQ573ZSbvlpH5NbCnRaTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -17,27 +17,28 @@ public class Item implements java.io.Serializable{
     private static final String DESCRIPTION = "description";
     private static final String PRICE = "price";
     private static final String PICTURES = "pictures";
-    private static final String SELLER = "seller";
+    private static final String SELLERID = "sellerId";
     private static final String INTERESTS = "interests";
     public String title;
     public String description;
     public Double price;
     //both types below will need to be changed soon
     public String pictures;
-    public UUID sellerId;
+    public String sellerId;
     public User seller;
     public ItemInterestCatalog interests;
-    public UUID id;
+    public String id;
 
     public Item(String title, Double price, String description, String pictures, User seller) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.pictures = pictures;
-        this.sellerId = seller.id;
+        if (seller != null) {
+            this.sellerId = seller.id;}
         this.seller = seller;
         this.interests = new ItemInterestCatalog(this);
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
     }
     public void getSellerFromID(UserCatalog users) {
         this.seller = users.getItemFromID(this.sellerId);
@@ -90,7 +91,7 @@ public class Item implements java.io.Serializable{
         map.put(DESCRIPTION, this.description);
         map.put(PRICE, this.price);
         map.put(PICTURES, this.pictures);
-        map.put(SELLER, this.sellerId);
+        map.put(SELLERID, this.sellerId);
         map.put(INTERESTS, this.interests.toMap());
 
         return map;
@@ -107,7 +108,7 @@ public class Item implements java.io.Serializable{
         item.description = (String) map.get(DESCRIPTION);
         item.price = (Double) map.get(PRICE);
         item.pictures = (String) map.get(PICTURES);
-        item.sellerId = (UUID) map.get(SELLER);
+        item.sellerId = (String) map.get(SELLERID);
         item.interests = ItemInterestCatalog.fromMap((Map<String, Object>)map.get(INTERESTS));
 
         return item;

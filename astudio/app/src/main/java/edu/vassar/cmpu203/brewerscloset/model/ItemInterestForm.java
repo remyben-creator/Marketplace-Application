@@ -11,18 +11,18 @@ public class ItemInterestForm {
     private static final String ITEM = "item";
     private static final String INTEREST = "interest";
     private static final String ID = "id";
-    public UUID userId;
+    public String userId;
     public User user;
-    public UUID item;
+    public String item;
     public String interest;
-    public UUID id;
+    public String id;
 
     public ItemInterestForm(User user, Item item, String interest){
         this.userId = user.id;
         this.user = user;
         this.item = item.id;
         this.interest = interest;
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
     }
     public void getUserFromID(UserCatalog users) {
         this.user = users.getItemFromID(this.userId);
@@ -49,10 +49,10 @@ public class ItemInterestForm {
     public static ItemInterestForm fromMap(@NonNull Map<String, Object> map) {
         ItemInterestForm interest = new ItemInterestForm(null, null, null);
 
-        interest.userId = (UUID) map.get(USER);
-        interest.id = (UUID) map.get(ID);
+        interest.userId = (String) map.get(USER);
+        interest.id = (String) map.get(ID);
         interest.interest = (String) map.get(INTEREST);
-        interest.item = (UUID) map.get(ITEM);
+        interest.item = (String) map.get(ITEM);
 
         return interest;
     }

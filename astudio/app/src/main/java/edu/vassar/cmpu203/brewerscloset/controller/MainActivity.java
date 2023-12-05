@@ -162,6 +162,7 @@ public class MainActivity extends AppCompatActivity
         else {
         Item newItem = this.user.createItem(itemTitle, itemPrice, itemDesc, itemPics, this.user);
         this.items.addItem(newItem);
+        this.persFacade.saveItem(newItem);
         this.mainView.displayFragment(new HomeFeedFragment(this, this.user.myItems),false,"home feed");}
 
     }
@@ -214,9 +215,10 @@ public class MainActivity extends AppCompatActivity
         //check to see if its already there
         user = this.users.checkForUser(userEmail, userPassword);
         if (user == null) {
-            User user = new User(userEmail, userPassword);
-            this.user = user;
-            this.users.addUser(user);
+            User newUser = new User(userEmail, userPassword);
+            this.user = newUser;
+            this.users.addUser(newUser);
+            this.persFacade.saveUser(newUser);
             return true;
         }
         return false;

@@ -11,20 +11,23 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ItemInterestCatalog implements Catalog, java.io.Serializable{
-    public static final String INTERESTS = "interests";
-    public static final String LENGTH = "length";
-    public static final String ITEM = "item";
-    public static final String ID = "id";
+    private static final String INTERESTS = "interests";
+    private static final String LENGTH = "length";
+    private static final String ITEM = "item";
+    private static final String ID = "id";
     public int length;
     public List<ItemInterestForm> interests;
-    public UUID item;
-    public UUID id;
+    public String item;
+    public String id;
 
     public ItemInterestCatalog(Item item) {
         this.length = 0;
         this.interests = new LinkedList<>();
-        this.item = item.id;
-        this.id = UUID.randomUUID();
+        if (item == null) {
+            UUID uuid = new UUID(0,0);
+            this.item = uuid.toString();}
+        else {this.item = item.id;}
+        this.id = UUID.randomUUID().toString();
     }
 
     public void addInterest(ItemInterestForm interest) {
@@ -76,7 +79,7 @@ public class ItemInterestCatalog implements Catalog, java.io.Serializable{
         }
         return null;
     }
-    public ItemInterestForm getItemFromID(UUID id) {
+    public ItemInterestForm getItemFromID(String id) {
         //get single item
         ListIterator<ItemInterestForm> iterator = this.interests.listIterator();
 
@@ -97,8 +100,8 @@ public class ItemInterestCatalog implements Catalog, java.io.Serializable{
         for (ItemInterestForm interest : this.interests) interestList.add(interest.toMap());
         map.put(INTERESTS, interestList);
         map.put(LENGTH, this.length);
-        map.put(ITEM, this.item);
-        map.put(ID, this.id);
+        map.put(ITEM, this.item.toString());
+        map.put(ID, this.id.toString());
 
         return map;
     }
@@ -107,9 +110,9 @@ public class ItemInterestCatalog implements Catalog, java.io.Serializable{
     public static ItemInterestCatalog fromMap(@NonNull Map<String, Object> map) {
         ItemInterestCatalog interests = new ItemInterestCatalog(null);
 
-        interests.length = (int) map.get(LENGTH);
-        interests.id = (UUID) map.get(ID);
-        interests.item = (UUID) map.get(ITEM);
+        interests.length = (int) ((long) map.get(LENGTH));
+        interests.id = (String) map.get(ID);
+        interests.item = (String) map.get(ITEM);
 
         List<Map<String, Object>> interestMapList = (List<Map<String, Object>>) map.get(INTERESTS);
         for (Map<String, Object> interestMap : interestMapList)

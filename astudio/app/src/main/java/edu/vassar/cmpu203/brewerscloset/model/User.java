@@ -15,26 +15,33 @@ import java.util.UUID;
 public class User {
     private static final String EMAIL = "email";
     private static final String PASSWORD = "password";
-    private static final String MYITEMS = "myItems";
+    private static final String MYITEMSIDS = "myItemsIds";
     private static final String MYINTERESTS = "myInterests";
     private static final String ID = "id";
     public String email;
     public String password;
-    public List<UUID> myItemsIds;
+    public String myItemsIds;
     public ItemCatalog myItems;
     public ItemInterestCatalog myInterests;
-    public UUID id;
+    public String id;
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
-        this.myItemsIds = new LinkedList<UUID>();
+        this.myItemsIds = "";
         this.myItems = new ItemCatalog();
         this.myInterests = new ItemInterestCatalog(null);
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
     }
     public void genMyItems(ItemCatalog items) {
-        for (UUID id : myItemsIds) this.myItems.addItem(items.getItemFromID(id));
+        String[] idsArray = this.myItemsIds.split(" ");  // Splitting the string into an array using space as a delimiter
+
+        int i = 0;
+        while (i < idsArray.length) {
+            String id = idsArray[i];
+            this.myItems.addItem(items.getItemFromID(id));
+            i++;
+        }
     }
 
     public Item createItem(String title, Double price, String description, String pictures, User seller) {
@@ -90,9 +97,9 @@ public class User {
         map.put(MYINTERESTS, this.myInterests.toMap());
 
         //use the ids of items and interests in myitems and myinterests
-        List<UUID> myItemsIds = new LinkedList<>();
-        for (Item item : this.myItems.items)  myItemsIds.add(item.id);
-        map.put(MYITEMS, myItemsIds);
+        for (Item item : this.myItems.items) this.myItemsIds = this.myItemsIds + item.id + " ";
+
+        map.put(MYITEMSIDS, this.myItemsIds);
 
         return map;
     }
@@ -103,11 +110,9 @@ public class User {
 
         user.email = (String) map.get(EMAIL);
         user.password = (String) map.get(PASSWORD);
-        user.id = (UUID) map.get(ID);
+        user.id = (String) map.get(ID);
         user.myInterests = (ItemInterestCatalog.fromMap(map));
-
-        List<UUID> myItemsIds = (List<UUID>) map.get(MYITEMS);
-        for (UUID itemId : myItemsIds) user.myItemsIds.add(itemId);
+        user.myItemsIds = (String) map.get(MYITEMSIDS);
 
         return user;
     }

@@ -75,7 +75,7 @@ public class UserCatalog implements Catalog{
         }
         return null;
     }
-    public User getItemFromID(UUID id) {
+    public User getItemFromID(String id) {
         //get single item
         ListIterator<User> iterator = this.users.listIterator();
 
