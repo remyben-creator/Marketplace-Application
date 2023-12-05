@@ -1,5 +1,4 @@
 ```plantuml
-|System|
 start
 if (delete-interest-confirmed) then (Yes)
     :Removes interest from item's interest list;    

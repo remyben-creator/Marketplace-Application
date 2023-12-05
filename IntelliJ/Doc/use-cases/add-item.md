@@ -28,7 +28,6 @@ else (no)
 endif
 endwhile (yes) 
 |System|
-:Display "Item has been successfully posted";
 :Lists Item on database;
 stop
 @enduml
