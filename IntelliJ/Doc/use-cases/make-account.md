@@ -26,7 +26,6 @@ else(no)
 endif 
 endwhile(yes)
 |System|
-:Display "Account has been successfully created. Happy browsing!";
 :Adds User to UserCatalog;
 Stop
 @enduml
