@@ -4,15 +4,17 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
-import edu.vassar.cmpu203.brewerscloset.model.Catalog;
 import edu.vassar.cmpu203.brewerscloset.model.Item;
 import edu.vassar.cmpu203.brewerscloset.model.ItemCatalog;
 import edu.vassar.cmpu203.brewerscloset.model.ItemInterestCatalog;
 import edu.vassar.cmpu203.brewerscloset.model.ItemInterestForm;
 import edu.vassar.cmpu203.brewerscloset.model.User;
 import edu.vassar.cmpu203.brewerscloset.model.UserCatalog;
+import edu.vassar.cmpu203.brewerscloset.persistence.IPersistenceFacade;
 import edu.vassar.cmpu203.brewerscloset.view.AccountFragment;
 import edu.vassar.cmpu203.brewerscloset.view.AddItemFragment;
 import edu.vassar.cmpu203.brewerscloset.view.ConfirmDeleteFragment;
@@ -24,6 +26,8 @@ import edu.vassar.cmpu203.brewerscloset.view.LoggedInAccountFragment;
 import edu.vassar.cmpu203.brewerscloset.view.MainView;
 import edu.vassar.cmpu203.brewerscloset.view.IAddItemView;
 import edu.vassar.cmpu203.brewerscloset.view.IHomeFeedView;
+import edu.vassar.cmpu203.brewerscloset.persistence.FirestoreFacade;
+import edu.vassar.cmpu203.brewerscloset.persistence.IPersistenceFacade;
 
 
 import android.app.Activity;
@@ -39,18 +43,37 @@ public class MainActivity extends AppCompatActivity
     User user;
     UserCatalog users;
     IMainView mainView;
+    Fragment curFrag;
+    IPersistenceFacade persFacade;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //start with empty item/user catalog
+        //initialize persistence facade
+        this.persFacade = new FirestoreFacade();
+
+        //empty item/user catalogs by default
         this.items = new ItemCatalog();
         this.users = new UserCatalog();
 
         //start with no login info
         this.user = new User("Guest", null);
         
-        //start with 
+        //load catalogs if they exist
+        this.persFacade.retrieveCatalogs(new IPersistenceFacade.Listener() {
+            @Override
+            public void onItemCatalogReceived(@NonNull ItemCatalog itemCatalog) {
+                MainActivity.this.items = itemCatalog;
+            }
+
+            @Override
+            public void onUserCatalogReceived(@NonNull UserCatalog userCatalog) {
+                MainActivity.this.users = userCatalog;
+            }
+        });
+
+        this.syncItemsAndUsers();
+
 
         //create main view object
         mainView = new MainView(this);
@@ -59,6 +82,10 @@ public class MainActivity extends AppCompatActivity
 
         mainView.displayFragment(new HomeFeedFragment(this, this.items), false, "home feed");
         // call this again to move around fragments
+    }
+
+    private void syncItemsAndUsers() {
+        for (Item item : this.items.items) item.getSellerFromID(users);
     }
 
     //Home feed listener methods
@@ -172,8 +199,8 @@ public class MainActivity extends AppCompatActivity
     public boolean checkValidLogin(String userEmail, String userPassword) {
         //user params to check a user login
         //and puts the user as current user if correct
-        if (this.users.loginUser(userEmail, userPassword) != null) {
-            this.user = this.users.loginUser(userEmail, userPassword);
+        if (this.users.loginUser(userEmail, userPassword, this.items) != null) {
+            this.user = this.users.loginUser(userEmail, userPassword, this.items);
             return true;
         }
         return false;

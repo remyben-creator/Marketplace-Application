@@ -1,4 +1,4 @@
-package edu.vassar.cmpu203.brewerscloset.persistance;
+package edu.vassar.cmpu203.brewerscloset.persistence;
 
 import androidx.annotation.NonNull;
 
@@ -16,7 +16,7 @@ import edu.vassar.cmpu203.brewerscloset.model.ItemCatalog;
 import edu.vassar.cmpu203.brewerscloset.model.User;
 import edu.vassar.cmpu203.brewerscloset.model.UserCatalog;
 
-public class FirestoreFacade implements IPersistanceFacade{
+public class FirestoreFacade implements IPersistenceFacade {
     private static final String ITEMS_COLLECTION = "items";
     private static final String USERS_COLLECTION = "users";
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -41,7 +41,7 @@ public class FirestoreFacade implements IPersistanceFacade{
      * @param listener the observer to be notified of query result.
      */
     @Override
-    public void retrieveItemCatalog(@NonNull Listener listener) {
+    public void retrieveCatalogs(@NonNull Listener listener) {
 
         ItemCatalog itemCatalog = new ItemCatalog();
 
@@ -60,15 +60,13 @@ public class FirestoreFacade implements IPersistanceFacade{
                 listener.onItemCatalogReceived(itemCatalog);
             }
         });
-    }
-    @Override
-    public void retrieveUserCatalog(@NonNull Listener listener) {
+
         UserCatalog userCatalog = new UserCatalog();
 
-        Task<QuerySnapshot> task = this.db.collection(USERS_COLLECTION)
+        Task<QuerySnapshot> task2 = this.db.collection(USERS_COLLECTION)
                 .get();
 
-        task.addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        task2.addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot qsnap) {
 

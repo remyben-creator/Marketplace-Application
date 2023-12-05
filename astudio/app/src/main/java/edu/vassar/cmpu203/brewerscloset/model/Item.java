@@ -24,7 +24,8 @@ public class Item implements java.io.Serializable{
     public Double price;
     //both types below will need to be changed soon
     public String pictures;
-    public UUID seller;
+    public UUID sellerId;
+    public User seller;
     public ItemInterestCatalog interests;
     public UUID id;
 
@@ -33,9 +34,13 @@ public class Item implements java.io.Serializable{
         this.description = description;
         this.price = price;
         this.pictures = pictures;
-        this.seller = seller.id;
+        this.sellerId = seller.id;
+        this.seller = seller;
         this.interests = new ItemInterestCatalog(this);
         this.id = UUID.randomUUID();
+    }
+    public void getSellerFromID(UserCatalog users) {
+        this.seller = users.getItemFromID(this.sellerId);
     }
 
     // Define methods for posts
@@ -66,16 +71,15 @@ public class Item implements java.io.Serializable{
         this.price = price;
     }
 
-    public User getSeller(UserCatalog users) {
-        return users.getItemFromID(this.seller);
-    }
+    public User getSeller() {return this.seller;}
     public void setSeller(User seller) {
-        this.seller = seller.id;
+        this.sellerId = seller.id;
+        this.seller = seller;
     }
 
     //data persistence mapping functions
     /**
-     * return a map with the sales contents
+     * return a map with the items contents
      */
     @NonNull
     public Map<String, Object> toMap() {
@@ -86,7 +90,7 @@ public class Item implements java.io.Serializable{
         map.put(DESCRIPTION, this.description);
         map.put(PRICE, this.price);
         map.put(PICTURES, this.pictures);
-        map.put(SELLER, this.seller.toMap());
+        map.put(SELLER, this.sellerId);
         map.put(INTERESTS, this.interests.toMap());
 
         return map;
@@ -103,7 +107,7 @@ public class Item implements java.io.Serializable{
         item.description = (String) map.get(DESCRIPTION);
         item.price = (Double) map.get(PRICE);
         item.pictures = (String) map.get(PICTURES);
-        item.seller = User.fromMap((Map<String, Object>)map.get(SELLER));
+        item.sellerId = (UUID) map.get(SELLER);
         item.interests = ItemInterestCatalog.fromMap((Map<String, Object>)map.get(INTERESTS));
 
         return item;

@@ -1,4 +1,4 @@
-package edu.vassar.cmpu203.brewerscloset.persistance;
+package edu.vassar.cmpu203.brewerscloset.persistence;
 
 import android.util.Log;
 
@@ -13,15 +13,13 @@ import java.io.ObjectOutputStream;
 
 import edu.vassar.cmpu203.brewerscloset.model.ItemCatalog;
 import edu.vassar.cmpu203.brewerscloset.model.Item;
-import edu.vassar.cmpu203.brewerscloset.model.ItemInterestForm;
-import edu.vassar.cmpu203.brewerscloset.model.ItemInterestCatalog;
 import edu.vassar.cmpu203.brewerscloset.model.User;
 import edu.vassar.cmpu203.brewerscloset.model.UserCatalog;
 
 /**
  * Class that implements the persistance facade by writing data to the local device's file storage
  */
-public class LocalStorageFacade implements IPersistanceFacade {
+public class LocalStorageFacade implements IPersistenceFacade {
     public static final String ITEMCATALOG_FILENAME = "itemCatalog.brewersCloset";
     public static final String USERCATALOG_FILENAME = "userCatalog.brewersCloset";
 
@@ -73,7 +71,7 @@ public class LocalStorageFacade implements IPersistanceFacade {
      * @param listener the listener to be notified when the Ledger becomes available
      */
     @Override
-    public void retrieveItemCatalog(@NonNull Listener listener) {
+    public void retrieveCatalogs(@NonNull Listener listener) {
         if (this.itemsFile.isFile()) {
             try {
                 FileInputStream fis = new FileInputStream(this.itemsFile);
@@ -91,16 +89,13 @@ public class LocalStorageFacade implements IPersistanceFacade {
                 e.printStackTrace();
             }
         }
-    }
-    @Override
-    public void retrieveUserCatalog(@NonNull Listener listener) {
         if (this.usersFile.isFile()) {
             try {
                 FileInputStream fis = new FileInputStream(this.usersFile);
                 ObjectInputStream ois = new ObjectInputStream(fis);
 
-                this.userCatalog = (UserCatalog) ois.readObject(); //extract ledger from file
-                listener.onUserCatalogReceived(this.userCatalog); // tell the listener abou it
+                this.userCatalog = (UserCatalog) ois.readObject(); //extract catalog from file
+                listener.onUserCatalogReceived(this.userCatalog); // tell the listener about it
             } catch (IOException e) {
                 final String emsg = String.format("I/O error writing to %s", this.usersFile);
                 Log.e("BrewersCloset", emsg);
