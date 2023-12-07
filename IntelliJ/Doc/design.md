@@ -61,7 +61,6 @@ participant " : ItemCatalog" as itemcatalog
 
 ui -> user : displays item post form
 user -> ui : inputs item information
-user -> ui : clicks confirm
 ui -> controller : this.user.createItem(itemTitle, itemPrice, itemDesc, itemPics, this.user)
 controller -> moderator : isBannedItem(String title, String description)
 alt isBanned   
@@ -85,12 +84,10 @@ participant " : ItemInterestCatalog" as iteminterestcatalog
 user -> ui : clicks add Interest
 ui -> user : displays interest form
 user -> ui : fills out interest form 
-ui -> controller : interestEditable = holder.interestBar.getText()
 ui -> controller : interestStr = interestEditable.toString();  
-
 alt interestInvalid 
  ui -> user : "Interest invalid: Please make sure all fields are filled"
-else
+else !interestInvalid
  controller -> iteminterestcatalog : uponInterest(item)
  ui -> user : Display "Interest Created"
 end
@@ -108,22 +105,19 @@ participant " : UserCatalog" as usercatalog
 
 ui -> user : displays create account form 
 user -> ui : enters email and password
-ui -> controller : userEmailEditable = AccountFragment.this.binding.emailBar.getText()
-ui -> controller : userEmailStr = userEmailEditable.toString()
-ui -> controller : userPasswordEditable = AccountFragment.this.binding.passwordBar.getText()
-ui -> controller : userPasswordStr = userPasswordEditable.toString()
-controller -> moderator : Moderator.isValidEmail(userEmailStr)
+ui -> controller : userEmail = userEmailEditable.toString()
+ui -> controller : userPassword= userPasswordEditable.toString()
+controller -> moderator : checkCreateAccount(String userEmail, String userPassword)
 alt isValidEmail
- controller -> ui : checkCreateAccount(String userEmail, String userPassword)
+ controller -> usercatalog : checkForUser(userEmail, userPassword)
 alt userExists 
  ui -> user : Display "Already account with this email"
-
-else 
- controller -> usercatalog : this.users.addUser(User)
+else !userExists
+ controller -> usercatalog : addUser(User)
  ui -> user : Display "User Created"
 end
 else !isValidEmail
- ui -> user : Display "Invalid User: Please use vassar.edu email""Already account with this email"
+ ui -> user : Display "Invalid User: check username and password"
 end
 
 
@@ -135,15 +129,12 @@ hide footbox
 actor User as user
 participant " : HomeFeedFragment" as ui
 participant " : MainActivity" as controller
-participant " :ItemCatalog" as itemCatalog
-
+participant " : ItemCatalog" as itemCatalog
 
 ui -> user : displays item search form 
 user -> ui : fills out search form
-user -> ui : clicks search
-ui -> controller :  SSEditable = HomeFeedFragment.this.binding.searchBar.getText()
-ui -> controller :  SSStr = SSEditable.toString()
-controller -> itemCatalog : searchResult(searchString)
+ui -> controller :  searchString = SSEditable.toString()
+controller -> itemCatalog : uponSearch(searchString)
 controller -> ui : searchItems = searchResult(searchString)
 ui -> user : displays searchItems
 
