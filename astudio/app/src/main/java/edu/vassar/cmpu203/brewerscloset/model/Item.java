@@ -1,7 +1,13 @@
 package edu.vassar.cmpu203.brewerscloset.model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import androidx.annotation.NonNull;
 
+import com.google.firebase.firestore.Blob;
+
+import java.io.ByteArrayOutputStream;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -19,17 +25,18 @@ public class Item implements java.io.Serializable{
     private static final String PICTURES = "pictures";
     private static final String SELLERID = "sellerId";
     private static final String INTERESTS = "interests";
+    private static final String ID = "id";
     public String title;
     public String description;
     public Double price;
     //both types below will need to be changed soon
-    public String pictures;
+    public Bitmap pictures;
     public String sellerId;
     public User seller;
     public ItemInterestCatalog interests;
     public String id;
 
-    public Item(String title, Double price, String description, String pictures, User seller) {
+    public Item(String title, Double price, String description, Bitmap pictures, User seller) {
         this.title = title;
         this.description = description;
         this.price = price;
@@ -78,6 +85,20 @@ public class Item implements java.io.Serializable{
         this.seller = seller;
     }
 
+    // convert bitmap -> blob
+    public Blob getBlobFromBitmap(Bitmap bitmap) {
+        final ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.WEBP_LOSSLESS, 70, stream);
+        final byte[] bytes = stream.toByteArray();
+        return Blob.fromBytes(bytes);
+    }
+
+    // convert blob -> bitmap
+    public static Bitmap getBitmapFromBlob(Blob imageBlob) {
+        final byte[] bytes = imageBlob.toBytes();
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
     //data persistence mapping functions
     /**
      * return a map with the items contents
@@ -90,7 +111,10 @@ public class Item implements java.io.Serializable{
         map.put(TITLE, this.title);
         map.put(DESCRIPTION, this.description);
         map.put(PRICE, this.price);
-        map.put(PICTURES, this.pictures);
+        map.put(ID, this.id);
+        // saving images
+        Blob imageBlob = getBlobFromBitmap(this.pictures);
+        map.put(PICTURES, imageBlob);
         map.put(SELLERID, this.sellerId);
         map.put(INTERESTS, this.interests.toMap());
 
@@ -107,12 +131,16 @@ public class Item implements java.io.Serializable{
         item.title = (String) map.get(TITLE);
         item.description = (String) map.get(DESCRIPTION);
         item.price = (Double) map.get(PRICE);
-        item.pictures = (String) map.get(PICTURES);
+        item.id = (String) map.get(ID);
+        //retrieving pictures
+        Blob blob = (Blob) map.get(PICTURES);
+        if (blob != null) item.pictures =  getBitmapFromBlob(blob);
         item.sellerId = (String) map.get(SELLERID);
         item.interests = ItemInterestCatalog.fromMap((Map<String, Object>)map.get(INTERESTS));
 
         return item;
     }
+
 
 }
 

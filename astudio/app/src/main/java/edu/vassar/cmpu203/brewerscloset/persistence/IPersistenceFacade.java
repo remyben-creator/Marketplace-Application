@@ -24,8 +24,6 @@ public interface IPersistenceFacade {
      * Saves the Item passed in as input to the underlying persistence solution.
      * @param sale the Item to be saved
      */
-    void saveItem(@NonNull Item item);
-    void saveUser(@NonNull User user);
     void setItem(@NonNull Item item);
     void setUser(@NonNull User user);
 

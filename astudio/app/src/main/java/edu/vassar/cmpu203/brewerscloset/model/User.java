@@ -1,5 +1,7 @@
 package edu.vassar.cmpu203.brewerscloset.model;
 
+import android.graphics.Bitmap;
+
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
@@ -44,7 +46,7 @@ public class User {
         }
     }
 
-    public Item createItem(String title, Double price, String description, String pictures, User seller) {
+    public Item createItem(String title, Double price, String description, Bitmap pictures, User seller) {
         // for a user to create an item to be listed on the service
         Item item = new Item(title, price, description, pictures, this);
         this.myItems.addItem(item);
@@ -55,11 +57,12 @@ public class User {
         return false;
     }
 
-    public void editItem(Item item,String title, Double price, String description, String pictures) {
+    public void editItem(Item item,String title, Double price, String description, Bitmap pictures) {
         // for a user to edit an item that has been listed
         item.setTitle(title);
         item.setPrice(price);
         item.setDescription(description);
+        item.pictures = pictures;
     }
 
     public void addInterest(Item item, String interest) {

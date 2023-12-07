@@ -36,7 +36,7 @@ public class LocalStorageFacade implements IPersistenceFacade {
         this.userCatalog = new UserCatalog();
     }
 
-    @Override
+
     public void saveItem(@NonNull Item item) {
         this.itemCatalog.addItem(item);
 
@@ -51,7 +51,7 @@ public class LocalStorageFacade implements IPersistenceFacade {
             e.printStackTrace();
         }
     }
-    @Override
+
     public void saveUser(@NonNull User user) {
         this.userCatalog.addUser(user);
 
@@ -66,6 +66,17 @@ public class LocalStorageFacade implements IPersistenceFacade {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void setItem(@NonNull Item item) {
+
+    }
+
+    @Override
+    public void setUser(@NonNull User user) {
+
+    }
+
     /**
      * Issues a Ledger retreival operation
      * @param listener the listener to be notified when the Ledger becomes available

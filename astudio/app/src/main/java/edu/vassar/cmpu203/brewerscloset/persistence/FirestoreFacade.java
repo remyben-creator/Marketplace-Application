@@ -25,27 +25,19 @@ public class FirestoreFacade implements IPersistenceFacade {
     /**
      * Saves the Item passed in as input to the underlying persistence solution.
      * @param item the item to be saved
+     *
+     *
      */
-    @Override
-    public void saveItem(@NonNull Item item) {
-        CollectionReference cref = this.db.collection(ITEMS_COLLECTION);
-        cref.add(item.toMap());
-    }
-    @Override
-    public void saveUser(@NonNull User user) {
-        CollectionReference cref = this.db.collection(USERS_COLLECTION);
-        cref.add(user.toMap());
-    }
     @Override
     public void setItem(@NonNull Item item) {
         CollectionReference cref = this.db.collection(ITEMS_COLLECTION);
-        DocumentReference dref = cref.document();
+        DocumentReference dref = cref.document(item.id);
         dref.set(item.toMap());
     }
     @Override
     public void setUser(@NonNull User user) {
         CollectionReference cref = this.db.collection(USERS_COLLECTION);
-        DocumentReference dref = cref.document();
+        DocumentReference dref = cref.document(user.id);
         dref.set(user.toMap());
     }
 

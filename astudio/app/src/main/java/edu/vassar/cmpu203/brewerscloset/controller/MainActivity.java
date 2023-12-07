@@ -33,9 +33,14 @@ import edu.vassar.cmpu203.brewerscloset.persistence.IPersistenceFacade;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity
     implements IAddItemView.Listener, IHomeFeedView.Listener, IAccountView.Listener, IConfirmDeleteView.Listener {
@@ -133,6 +138,7 @@ public class MainActivity extends AppCompatActivity
         ItemCatalog itemInterest = new ItemCatalog();
         itemInterest.addItem(item);
         itemInterest.forInterest = true;
+        this.persFacade.setItem(item);
         this.mainView.displayFragment(new HomeFeedFragment(this, itemInterest), false, "home feed");
     }
     public void uponDeleteItem(Item item) {
@@ -155,7 +161,7 @@ public class MainActivity extends AppCompatActivity
             this.mainView.displayFragment(new HomeFeedFragment(this, this.items), false, "home feed");
         }
     }
-    public void uponPost(Item item, String itemTitle, Double itemPrice, String itemDesc, String itemPics, boolean edit) {
+    public void uponPost(Item item, String itemTitle, Double itemPrice, String itemDesc, Bitmap itemPics, boolean edit) {
         if (edit) {
             this.user.editItem(item, itemTitle, itemPrice, itemDesc, itemPics);
             this.mainView.displayFragment(new HomeFeedFragment(this, this.user.myItems),false,"my item feed");
@@ -163,7 +169,7 @@ public class MainActivity extends AppCompatActivity
         else {
         Item newItem = this.user.createItem(itemTitle, itemPrice, itemDesc, itemPics, this.user);
         this.items.addItem(newItem);
-        this.persFacade.saveItem(newItem);
+        this.persFacade.setItem(newItem);
         this.mainView.displayFragment(new HomeFeedFragment(this, this.user.myItems),false,"home feed");}
 
     }
@@ -173,7 +179,6 @@ public class MainActivity extends AppCompatActivity
 
         this.aiv = aiv;
         imgARL.launch(intent);
-
 
     }
 
@@ -187,11 +192,30 @@ public class MainActivity extends AppCompatActivity
                         //there are no request codes
                         Intent data = result.getData();
                         Uri photo = data.getData();
-                        aiv.updateImage(photo);
+                        Bitmap selectedImage = loadFromUri(photo);
+                        aiv.updateImage(selectedImage);
                     }
                 }
             }
     );
+    public Bitmap loadFromUri(Uri photoUri) {
+        Bitmap image = null;
+        try {
+            // check version of Android on device
+            if(Build.VERSION.SDK_INT > 27){
+                // on newer versions of Android, use the new decodeBitmap method
+                ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), photoUri);
+                image = ImageDecoder.decodeBitmap(source);
+            } else {
+                // support older versions of Android by using getBitmap
+                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+
 
     //Account listener methods
     public void uponLoginGoHome() {
@@ -220,7 +244,7 @@ public class MainActivity extends AppCompatActivity
                 User newUser = new User(userEmail, userPassword);
                 this.user = newUser;
                 this.users.addUser(newUser);
-                this.persFacade.saveUser(newUser);
+                this.persFacade.setUser(newUser);
                 return true;
             }}
         return false;
@@ -235,15 +259,20 @@ public class MainActivity extends AppCompatActivity
     }
     public void uponConfirmDeleteItem(Item item) {
         this.user.deleteItem(this.items, item);
+        this.persFacade.setUser(this.user);
+        this.persFacade.setItem(item);
         this.mainView.displayFragment(new HomeFeedFragment(this, this.user.myItems), false, "my item feed");
     }
     public void uponConfirmDeleteInterest(ItemInterestCatalog interests, int index) {
         ItemInterestForm interest = interests.getInterest(index);
         interests.removeInterest(interest);
+        this.persFacade.setUser(this.user);
+        this.persFacade.setItem(this.items.getItemFromID(interests.item));
         this.mainView.displayFragment(new HomeFeedFragment(this, interests), false, "interests");
     }
     public void uponConfirmDeleteUser() {
         this.users.removeUser(this.user, this.items);
+        this.persFacade.setUser(this.user);
         this.user = new User("Guest", null);
         this.mainView.displayFragment(new AccountFragment(this), false, "account screen");
     }

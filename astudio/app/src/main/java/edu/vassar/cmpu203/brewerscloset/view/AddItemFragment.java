@@ -1,6 +1,7 @@
 package edu.vassar.cmpu203.brewerscloset.view;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -36,6 +37,7 @@ public class AddItemFragment extends Fragment implements IAddItemView{
     Moderator moderator;
     boolean edit;
     Item editItem;
+    Bitmap currentImage;
 
     public AddItemFragment(@NonNull Listener listener, boolean edit, Item editItem){
         this.listener = listener;
@@ -73,6 +75,7 @@ public class AddItemFragment extends Fragment implements IAddItemView{
             public void onClick(View v) {
                 Snackbar.make(v, "Add Pictures", Snackbar.LENGTH_LONG).show();
                 AddItemFragment.this.listener.uponAddPics(AddItemFragment.this);
+
             }
         });
 
@@ -96,7 +99,8 @@ public class AddItemFragment extends Fragment implements IAddItemView{
 
                 //check em
                 if (itemDescStr.length() == 0
-                || itemTitleStr.length() == 0 || itemPriceStr.length() == 0) {
+                || itemTitleStr.length() == 0 || itemPriceStr.length() == 0
+                        || AddItemFragment.this.currentImage == null) {
                     Snackbar.make(v, "Invalid Item: Please make sure all fields are filled", Snackbar.LENGTH_LONG).show();
                     return;
                 }
@@ -117,13 +121,14 @@ public class AddItemFragment extends Fragment implements IAddItemView{
 
 
                 //notify listener
-                AddItemFragment.this.listener.uponPost(editItem, itemTitleStr, itemPrice, itemDescStr, null, edit);
+                AddItemFragment.this.listener.uponPost(editItem, itemTitleStr, itemPrice, itemDescStr, AddItemFragment.this.currentImage, edit);
             }
         });
     }
     @Override
-    public void updateImage(Uri data) {
-        this.binding.imageView.setImageURI(data);
+    public void updateImage(Bitmap data) {
+        this.currentImage = data;
+        this.binding.imageView.setImageBitmap(data);
     }
 
 

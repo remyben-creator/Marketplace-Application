@@ -56,6 +56,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsHolder>{
             holder.titleView.setText(itemCatalog.getItem(position).getTitle());
             holder.descriptionView.setText(itemCatalog.getItem(position).getDescription());
             holder.priceView.setText(itemCatalog.getItem(position).getPriceString());
+            holder.imageView.setImageBitmap(itemCatalog.getItem(position).pictures);
 
 
             //for regular home feed
