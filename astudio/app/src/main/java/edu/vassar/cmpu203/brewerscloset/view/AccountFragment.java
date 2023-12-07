@@ -57,17 +57,17 @@ public class AccountFragment extends Fragment implements IAccountView{
 
                 //retrieve email
                 final Editable userEmailEditable = AccountFragment.this.binding.emailBar.getText();
-                final String userEmailStr = userEmailEditable.toString();
+                final String userEmail = userEmailEditable.toString();
                 //retrieve password
                 final Editable userPasswordEditable = AccountFragment.this.binding.passwordBar.getText();
-                final String userPasswordStr = userPasswordEditable.toString();
+                final String userPassword = userPasswordEditable.toString();
 
                 //check em
-                if (userEmailStr.length() == 0 || userPasswordStr.length() == 0) {
+                if (userEmail.length() == 0 || userPassword.length() == 0) {
                     Snackbar.make(v, "Invalid User: Please make sure all fields are filled", Snackbar.LENGTH_LONG).show();
                     return;
                 }
-                if (AccountFragment.this.listener.checkValidLogin(userEmailStr, userPasswordStr) == false) {
+                if (AccountFragment.this.listener.checkValidLogin(userEmail, userPassword) == false) {
                     Snackbar.make(v, "Invalid User: Check username and password", Snackbar.LENGTH_LONG).show();
                     return;
                 }
@@ -99,13 +99,8 @@ public class AccountFragment extends Fragment implements IAccountView{
                     return;
                 }
 
-                if (Moderator.isValidEmail(userEmailStr) == false) {
-                    Snackbar.make(v, "Invalid User: Please use vassar.edu email", Snackbar.LENGTH_LONG).show();
-                    return;
-                }
-
                 if (AccountFragment.this.listener.checkCreateAccount(userEmailStr, userPasswordStr) == false) {
-                    Snackbar.make(v, "Already account with this email", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(v, "Incorrect Email", Snackbar.LENGTH_LONG).show();
                     return;
                 }
 

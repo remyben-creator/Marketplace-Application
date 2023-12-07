@@ -12,6 +12,7 @@ import edu.vassar.cmpu203.brewerscloset.model.Item;
 import edu.vassar.cmpu203.brewerscloset.model.ItemCatalog;
 import edu.vassar.cmpu203.brewerscloset.model.ItemInterestCatalog;
 import edu.vassar.cmpu203.brewerscloset.model.ItemInterestForm;
+import edu.vassar.cmpu203.brewerscloset.model.Moderator;
 import edu.vassar.cmpu203.brewerscloset.model.User;
 import edu.vassar.cmpu203.brewerscloset.model.UserCatalog;
 import edu.vassar.cmpu203.brewerscloset.persistence.IPersistenceFacade;
@@ -213,14 +214,15 @@ public class MainActivity extends AppCompatActivity
     public boolean checkCreateAccount(String userEmail, String userPassword) {
         //user params to create a user
         //check to see if its already there
-        user = this.users.checkForUser(userEmail, userPassword);
-        if (user == null) {
-            User newUser = new User(userEmail, userPassword);
-            this.user = newUser;
-            this.users.addUser(newUser);
-            this.persFacade.saveUser(newUser);
-            return true;
-        }
+        if (Moderator.isValidEmail(userEmail)) {
+            user = this.users.checkForUser(userEmail, userPassword);
+            if (user == null) {
+                User newUser = new User(userEmail, userPassword);
+                this.user = newUser;
+                this.users.addUser(newUser);
+                this.persFacade.saveUser(newUser);
+                return true;
+            }}
         return false;
     }
     public String getUserEmail() {

@@ -110,9 +110,9 @@ public class User {
 
         user.email = (String) map.get(EMAIL);
         user.password = (String) map.get(PASSWORD);
-        user.id = (String) map.get(ID);
-        user.myInterests = (ItemInterestCatalog.fromMap(map));
+        user.myInterests = (ItemInterestCatalog.fromMap((Map<String,Object>)map.get(MYINTERESTS)));
         user.myItemsIds = (String) map.get(MYITEMSIDS);
+        user.id = (String) map.get(ID);
 
         return user;
     }

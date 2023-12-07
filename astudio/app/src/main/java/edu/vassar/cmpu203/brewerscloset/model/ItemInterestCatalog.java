@@ -1,5 +1,7 @@
 package edu.vassar.cmpu203.brewerscloset.model;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import java.util.HashMap;
@@ -100,8 +102,8 @@ public class ItemInterestCatalog implements Catalog, java.io.Serializable{
         for (ItemInterestForm interest : this.interests) interestList.add(interest.toMap());
         map.put(INTERESTS, interestList);
         map.put(LENGTH, this.length);
-        map.put(ITEM, this.item.toString());
-        map.put(ID, this.id.toString());
+        map.put(ITEM, this.item);
+        map.put(ID, this.id);
 
         return map;
     }
@@ -110,7 +112,7 @@ public class ItemInterestCatalog implements Catalog, java.io.Serializable{
     public static ItemInterestCatalog fromMap(@NonNull Map<String, Object> map) {
         ItemInterestCatalog interests = new ItemInterestCatalog(null);
 
-        interests.length = (int) ((long) map.get(LENGTH));
+        interests.length = (int)(long) map.get(LENGTH);
         interests.id = (String) map.get(ID);
         interests.item = (String) map.get(ITEM);
 

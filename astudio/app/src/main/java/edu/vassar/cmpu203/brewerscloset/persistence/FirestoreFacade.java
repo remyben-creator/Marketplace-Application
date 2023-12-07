@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -34,6 +35,18 @@ public class FirestoreFacade implements IPersistenceFacade {
     public void saveUser(@NonNull User user) {
         CollectionReference cref = this.db.collection(USERS_COLLECTION);
         cref.add(user.toMap());
+    }
+    @Override
+    public void setItem(@NonNull Item item) {
+        CollectionReference cref = this.db.collection(ITEMS_COLLECTION);
+        DocumentReference dref = cref.document();
+        dref.set(item.toMap());
+    }
+    @Override
+    public void setUser(@NonNull User user) {
+        CollectionReference cref = this.db.collection(USERS_COLLECTION);
+        DocumentReference dref = cref.document();
+        dref.set(user.toMap());
     }
 
     /**
