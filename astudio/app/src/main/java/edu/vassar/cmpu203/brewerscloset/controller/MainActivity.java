@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity
     public void uponConfirmDeleteItem(Item item) {
         this.user.deleteItem(this.items, item);
         this.persFacade.setUser(this.user);
-        this.persFacade.setItem(item);
+        this.persFacade.deleteItem(item);
         this.mainView.displayFragment(new HomeFeedFragment(this, this.user.myItems), false, "my item feed");
     }
     public void uponConfirmDeleteInterest(ItemInterestCatalog interests, int index) {
@@ -272,7 +272,7 @@ public class MainActivity extends AppCompatActivity
     }
     public void uponConfirmDeleteUser() {
         this.users.removeUser(this.user, this.items);
-        this.persFacade.setUser(this.user);
+        this.persFacade.deleteUser(this.user);
         this.user = new User("Guest", null);
         this.mainView.displayFragment(new AccountFragment(this), false, "account screen");
     }

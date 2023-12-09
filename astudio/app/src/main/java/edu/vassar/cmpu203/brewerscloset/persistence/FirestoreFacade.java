@@ -41,6 +41,18 @@ public class FirestoreFacade implements IPersistenceFacade {
         dref.set(user.toMap());
     }
 
+    public void deleteItem(@NonNull Item item) {
+        CollectionReference cref = this.db.collection(ITEMS_COLLECTION);
+        DocumentReference dref = cref.document(item.id);
+        dref.delete();
+    }
+    public void deleteUser(@NonNull User user) {
+        CollectionReference cref = this.db.collection(USERS_COLLECTION);
+        DocumentReference dref = cref.document(user.id);
+        dref.delete();
+    }
+
+
     /**
      * Issues a itemCatalog retrieval operation.
      * @param listener the observer to be notified of query result.

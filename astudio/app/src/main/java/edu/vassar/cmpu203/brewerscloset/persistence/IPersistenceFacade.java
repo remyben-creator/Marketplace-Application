@@ -26,6 +26,8 @@ public interface IPersistenceFacade {
      */
     void setItem(@NonNull Item item);
     void setUser(@NonNull User user);
+    void deleteItem(@NonNull Item item);
+    void deleteUser(@NonNull User user);
 
     /**
      * Issues an ItemCatalog retrieval operation
