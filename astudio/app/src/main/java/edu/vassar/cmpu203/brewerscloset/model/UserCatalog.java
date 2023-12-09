@@ -57,11 +57,11 @@ public class UserCatalog implements Catalog{
         while (iterator.hasNext()) {
             User current = iterator.next();
             if (current.email.equals(userEmail) && current.password.equals(userPassword)) {
-                current.genMyItems(items);
+                if (current.myItems.length == 0) current.genMyItems(items);
                 return current;
             }
         }
-        return null;
+        return new User("Guest", null);
     }
     public User checkForUser(String userEmail, String userPassword) {
         //get single item

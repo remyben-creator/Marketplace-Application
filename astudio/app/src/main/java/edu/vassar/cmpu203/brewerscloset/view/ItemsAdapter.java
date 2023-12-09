@@ -53,10 +53,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsHolder>{
     public void onBindViewHolder(@NonNull ItemsHolder holder, int position) {
         if (items instanceof ItemCatalog) {
             ItemCatalog itemCatalog = (ItemCatalog) items;
-            holder.titleView.setText(itemCatalog.getItem(position).getTitle());
-            holder.descriptionView.setText(itemCatalog.getItem(position).getDescription());
-            holder.priceView.setText(itemCatalog.getItem(position).getPriceString());
-            holder.imageView.setImageBitmap(itemCatalog.getItem(position).pictures);
+            holder.titleView.setText(itemCatalog.getItem(holder.getAdapterPosition()).getTitle());
+            holder.descriptionView.setText(itemCatalog.getItem(holder.getAdapterPosition()).getDescription());
+            holder.priceView.setText(itemCatalog.getItem(holder.getAdapterPosition()).getPriceString());
+            holder.imageView.setImageBitmap(itemCatalog.getItem(holder.getAdapterPosition()).pictures);
 
 
             //for regular home feed

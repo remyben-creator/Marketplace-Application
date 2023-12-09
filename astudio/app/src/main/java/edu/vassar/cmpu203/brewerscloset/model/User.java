@@ -99,9 +99,14 @@ public class User {
         map.put(ID, this.id);
         map.put(MYINTERESTS, this.myInterests.toMap());
 
-        //use the ids of items and interests in myitems and myinterests
-        for (Item item : this.myItems.items) this.myItemsIds = this.myItemsIds + item.id + " ";
+        //use the ids of items and interests in myitems
+        StringBuilder builder = new StringBuilder();
 
+        for (Item item : this.myItems.items) {
+            builder.append(item.id);
+            builder.append(" ");
+        }
+        this.myItemsIds = builder.toString();
         map.put(MYITEMSIDS, this.myItemsIds);
 
         return map;
@@ -116,6 +121,7 @@ public class User {
         user.myInterests = (ItemInterestCatalog.fromMap((Map<String,Object>)map.get(MYINTERESTS)));
         user.myItemsIds = (String) map.get(MYITEMSIDS);
         user.id = (String) map.get(ID);
+
 
         return user;
     }

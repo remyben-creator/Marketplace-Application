@@ -86,7 +86,6 @@ public class HomeFeedFragment extends Fragment implements IHomeFeedView{
             this.binding.searchButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Snackbar.make(v, "Search Button was clicked", Snackbar.LENGTH_LONG).show();
 
                     //retrieve search string
                     final Editable SSEditable = HomeFeedFragment.this.binding.searchBar.getText();
@@ -110,7 +109,7 @@ public class HomeFeedFragment extends Fragment implements IHomeFeedView{
                             Snackbar.make(v, "Error: Logged in as Guest", Snackbar.LENGTH_LONG).show();
                             return;
                         }
-                        Snackbar.make(v, "My Items Button was clicked", Snackbar.LENGTH_LONG).show();
+
                         HomeFeedFragment.this.listener.uponMyItems();
                     }
 
@@ -119,14 +118,14 @@ public class HomeFeedFragment extends Fragment implements IHomeFeedView{
             this.binding.accountButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Snackbar.make(v, "Account Button was clicked", Snackbar.LENGTH_LONG).show();
+
                     HomeFeedFragment.this.listener.uponAccount();
                 }
             });
             this.binding.homeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Snackbar.make(v, "Returning to Home Feed", Snackbar.LENGTH_LONG).show();
+
                     HomeFeedFragment.this.listener.uponHome();
                 }
             });

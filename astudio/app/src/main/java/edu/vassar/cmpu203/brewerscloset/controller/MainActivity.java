@@ -165,11 +165,14 @@ public class MainActivity extends AppCompatActivity
         if (edit) {
             this.user.editItem(item, itemTitle, itemPrice, itemDesc, itemPics);
             this.mainView.displayFragment(new HomeFeedFragment(this, this.user.myItems),false,"my item feed");
+            this.persFacade.setItem(item);
+            this.persFacade.setUser(this.user);
         }
         else {
         Item newItem = this.user.createItem(itemTitle, itemPrice, itemDesc, itemPics, this.user);
         this.items.addItem(newItem);
         this.persFacade.setItem(newItem);
+        this.persFacade.setUser(this.user);
         this.mainView.displayFragment(new HomeFeedFragment(this, this.user.myItems),false,"home feed");}
 
     }
@@ -223,10 +226,10 @@ public class MainActivity extends AppCompatActivity
         this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
     }
     public boolean checkValidLogin(String userEmail, String userPassword) {
-        //user params to check a user login
+        //user params to check a user
         //and puts the user as current user if correct
-        if (this.users.loginUser(userEmail, userPassword, this.items) != null) {
-            this.user = this.users.loginUser(userEmail, userPassword, this.items);
+        this.user = this.users.loginUser(userEmail, userPassword, this.items);
+        if (!this.user.email.equals("Guest")) {
             return true;
         }
         return false;

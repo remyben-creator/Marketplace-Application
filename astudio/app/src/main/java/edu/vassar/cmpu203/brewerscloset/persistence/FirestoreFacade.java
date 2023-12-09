@@ -40,12 +40,13 @@ public class FirestoreFacade implements IPersistenceFacade {
         DocumentReference dref = cref.document(user.id);
         dref.set(user.toMap());
     }
-
+    @Override
     public void deleteItem(@NonNull Item item) {
         CollectionReference cref = this.db.collection(ITEMS_COLLECTION);
         DocumentReference dref = cref.document(item.id);
         dref.delete();
     }
+    @Override
     public void deleteUser(@NonNull User user) {
         CollectionReference cref = this.db.collection(USERS_COLLECTION);
         DocumentReference dref = cref.document(user.id);
