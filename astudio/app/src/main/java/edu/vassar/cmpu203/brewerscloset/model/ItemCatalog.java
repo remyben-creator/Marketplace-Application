@@ -58,18 +58,7 @@ public class ItemCatalog implements Catalog{
         }
         return null;
     }
-    /** /to be implemented later
-    public ItemCatalog similarItems() {
-        //returns items similar to
-        ItemCatalog similarItems = new ItemCatalog();
-        ListIterator<Item> iterator = this.items.listIterator();
 
-        while (iterator.hasNext()) {
-            //to be implemented later
-        }
-        return similarItems;
-    }
-     */
     public ItemCatalog searchResult(String searchString) {
         // returns a list of items that match a user search
         ItemCatalog searchItems = new ItemCatalog();
