@@ -60,6 +60,7 @@ public class AddItemFragment extends Fragment implements IAddItemView{
             this.binding.titleBar.setText(this.editItem.getTitle());
             this.binding.priceBar.setText(this.editItem.getPriceString());
             this.binding.descriptionBar.setText(this.editItem.getDescription());
+            this.binding.imageView.setImageBitmap(this.editItem.getPictures());
         }
 
         this.binding.backButton.setOnClickListener(new OnClickListener() {

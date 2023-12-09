@@ -32,8 +32,8 @@ public class User {
         this.password = password;
         this.myItemsIds = "";
         this.myItems = new ItemCatalog();
-        this.myInterests = new ItemInterestCatalog(null);
         this.id = UUID.randomUUID().toString();
+        this.myInterests = new ItemInterestCatalog(this.id);
     }
     public void genMyItems(ItemCatalog items) {
         String[] idsArray = this.myItemsIds.split(" ");  // Splitting the string into an array using space as a delimiter
@@ -66,7 +66,7 @@ public class User {
     }
 
     public void addInterest(Item item, String interest) {
-        ItemInterestForm itemInterest = new ItemInterestForm(this, item,interest);
+        ItemInterestForm itemInterest = new ItemInterestForm(this, item, interest);
         item.interests.addInterest(itemInterest);
         this.myInterests.addInterest(itemInterest);
     }
@@ -78,16 +78,6 @@ public class User {
     public void deleteItem(ItemCatalog items, Item item) {
         items.removeItem(item);
         this.myItems.removeItem(item);
-    }
-    public void deleteUserStuff(ItemCatalog items) {
-        for (int i = 0; i < myInterests.length; i++) {
-            this.deleteInterest(items, myInterests.getItem(i));
-            i--;
-        }
-        for (int i = 0; i < myItems.length; i++) {
-            this.deleteItem(items, myItems.getItem(i));
-            i--;
-        }
     }
 
     @NonNull

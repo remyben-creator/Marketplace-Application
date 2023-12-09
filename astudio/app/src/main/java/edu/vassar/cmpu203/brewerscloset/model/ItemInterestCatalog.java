@@ -22,13 +22,13 @@ public class ItemInterestCatalog implements Catalog, java.io.Serializable{
     public String item;
     public String id;
 
-    public ItemInterestCatalog(Item item) {
+    public ItemInterestCatalog(String item) {
         this.length = 0;
         this.interests = new LinkedList<>();
         if (item == null) {
             UUID uuid = new UUID(0,0);
             this.item = uuid.toString();}
-        else {this.item = item.id;}
+        else {this.item = item;}
         this.id = UUID.randomUUID().toString();
     }
 
@@ -47,6 +47,19 @@ public class ItemInterestCatalog implements Catalog, java.io.Serializable{
             }
         }
         this.length--;
+    }
+    public void removeByUser(String user) {
+        Iterator<ItemInterestForm> iterator = interests.iterator();
+
+        int i = 0;
+        while (iterator.hasNext()) {
+            ItemInterestForm element = iterator.next();
+            if (element.user.equals(user)) {
+                iterator.remove();
+                i++;
+            }
+        }
+        this.length -= i;
     }
     public int getLength() {return this.length;}
     public List<ItemInterestForm> getList() {

@@ -64,7 +64,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsHolder>{
                 holder.interestButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Snackbar.make(v, "Interest Button Clicked", Snackbar.LENGTH_LONG).show();
                         ItemsAdapter.this.listener.uponInterest(itemCatalog.getItem(holder.getAdapterPosition()));
                     }
                 });
@@ -76,14 +75,13 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsHolder>{
                 holder.editButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Snackbar.make(v, "Edit Button Clicked", Snackbar.LENGTH_LONG).show();
                         ItemsAdapter.this.listener.uponEdit(itemCatalog.getItem(holder.getAdapterPosition()));
                     }
                 });
                 holder.viewInterestButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Snackbar.make(v, "Interests Button Clicked", Snackbar.LENGTH_LONG).show();
+
                         ItemsAdapter.this.listener.uponViewInterest(itemCatalog.getItem(holder.getAdapterPosition()));
                     }
                 });
@@ -91,7 +89,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsHolder>{
                 holder.deleteButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Snackbar.make(v, "Delete Button Clicked", Snackbar.LENGTH_LONG).show();
                         ItemsAdapter.this.listener.uponDeleteItem(itemCatalog.getItem(holder.getAdapterPosition()));
                     }
                 });
@@ -125,13 +122,13 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsHolder>{
         }
         if (items instanceof ItemInterestCatalog) {
             ItemInterestCatalog interestCatalog = (ItemInterestCatalog) items;
-            holder.userEmailView.setText(interestCatalog.getItem(position).getUser().email);
+            String userId = interestCatalog.getItem(position).getUser();
+            holder.userEmailView.setText(ItemsAdapter.this.listener.getSomeUser(userId).email);
             holder.userInterestView.setText(interestCatalog.getItem(position).getInterest());
 
             holder.deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Snackbar.make(v, "Delete Button Clicked", Snackbar.LENGTH_LONG).show();
                     //this needs to make sure it deletes an interest in this scenario
                     ItemsAdapter.this.listener.uponDeleteInterest(interestCatalog, holder.getAdapterPosition());
 

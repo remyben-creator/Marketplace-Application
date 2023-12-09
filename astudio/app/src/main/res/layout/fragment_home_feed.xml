@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center|center_vertical"
-            android:text="Vassar Marketplace Feed"
+            android:text="Brewer's Closet"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:background="@color/black"
             android:textColor="@color/white"/>

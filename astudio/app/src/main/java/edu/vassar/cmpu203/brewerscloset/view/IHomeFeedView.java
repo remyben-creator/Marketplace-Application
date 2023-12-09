@@ -6,6 +6,7 @@ import edu.vassar.cmpu203.brewerscloset.model.Item;
 import edu.vassar.cmpu203.brewerscloset.model.ItemCatalog;
 import edu.vassar.cmpu203.brewerscloset.model.ItemInterestCatalog;
 import edu.vassar.cmpu203.brewerscloset.model.ItemInterestForm;
+import edu.vassar.cmpu203.brewerscloset.model.User;
 
 public interface IHomeFeedView {
     interface Listener {
@@ -24,6 +25,7 @@ public interface IHomeFeedView {
         public void uponDeleteItem(Item item);
         public void uponDeleteInterest(ItemInterestCatalog interest, int index);
         public void uponConfirm(Item item, String interest);
+        public User getSomeUser(String userId);
     }
 
 }

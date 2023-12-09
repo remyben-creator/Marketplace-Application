@@ -86,8 +86,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(mainView.getRootView());
 
 
-        mainView.displayFragment(new HomeFeedFragment(this, this.items), false, "home feed");
-        // call this again to move around fragments
+        mainView.displayFragment(new HomeFeedFragment(this, this.items.getRecent10()), false, "home feed");
+
     }
 
     private void syncItemsAndUsers() {
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
     public void uponHome() {
-        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items.getRecent10()),false,"home feed");
     }
     public boolean loggedIn() {
         if (this.user.email.equals("Guest")) {
@@ -135,10 +135,10 @@ public class MainActivity extends AppCompatActivity
         this.mainView.displayFragment(new HomeFeedFragment(this, item.interests), false, "interests");
         }
     public void uponInterest(Item item) {
+        //this is the single itemcatalog to show for interests
         ItemCatalog itemInterest = new ItemCatalog();
         itemInterest.addItem(item);
         itemInterest.forInterest = true;
-        this.persFacade.setItem(item);
         this.mainView.displayFragment(new HomeFeedFragment(this, itemInterest), false, "home feed");
     }
     public void uponDeleteItem(Item item) {
@@ -149,7 +149,12 @@ public class MainActivity extends AppCompatActivity
     }
     public void uponConfirm(Item item, String interest) {
         this.user.addInterest(item, interest);
-        this.mainView.displayFragment(new HomeFeedFragment(this, this.items), false, "home feed");
+        this.persFacade.setItem(item);
+        this.persFacade.setUser(this.user);
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items.getRecent10()), false, "home feed");
+    }
+    public User getSomeUser(String userId) {
+        return this.users.getItemFromID(userId);
     }
 
     //Add Item listener methods
@@ -158,7 +163,7 @@ public class MainActivity extends AppCompatActivity
             this.mainView.displayFragment(new HomeFeedFragment(this, this.user.myItems),false,"my item feed");
         }
         else {
-            this.mainView.displayFragment(new HomeFeedFragment(this, this.items), false, "home feed");
+            this.mainView.displayFragment(new HomeFeedFragment(this, this.items.getRecent10()), false, "home feed");
         }
     }
     public Boolean useModerator(String itemTitleStr, String itemDescStr) {
@@ -226,7 +231,7 @@ public class MainActivity extends AppCompatActivity
     //Account listener methods
     public void uponLoginGoHome() {
         //just to switch to the HomeFeed
-        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items.getRecent10()),false,"home feed");
     }
     public boolean checkValidLogin(String userEmail, String userPassword) {
         //user params to check a user
@@ -239,7 +244,7 @@ public class MainActivity extends AppCompatActivity
     }
     public void uponCreateAccountGoHome() {
         //to switch to home feed following an account creation
-        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items.getRecent10()),false,"home feed");
     }
     public boolean checkCreateAccount(String userEmail, String userPassword) {
         //user params to create a user
@@ -277,7 +282,14 @@ public class MainActivity extends AppCompatActivity
         this.mainView.displayFragment(new HomeFeedFragment(this, interests), false, "interests");
     }
     public void uponConfirmDeleteUser() {
-        this.users.removeUser(this.user, this.items);
+        for (Item item : this.user.myItems.items) {
+            this.persFacade.deleteItem(item);
+            items.removeItem(item);
+        }
+        for (ItemInterestForm interest : this.user.myInterests.interests) {
+            items.getItemFromID(interest.item).interests.removeInterest(interest);
+        }
+        this.users.removeUser(this.user);
         this.persFacade.deleteUser(this.user);
         this.user = new User("Guest", null);
         this.mainView.displayFragment(new AccountFragment(this), false, "account screen");
@@ -288,7 +300,7 @@ public class MainActivity extends AppCompatActivity
     //logged in account methods
     public void uponLogout(){
         this.user = new User("Guest", null);
-        this.mainView.displayFragment(new HomeFeedFragment(this, this.items),false,"home feed");
+        this.mainView.displayFragment(new HomeFeedFragment(this, this.items.getRecent10()),false,"home feed");
     }
     public void uponDelete() {
         this.mainView.displayFragment(new ConfirmDeleteFragment(this, null, null, -1, this.user), false, "confirm delete page");

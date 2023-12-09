@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class ItemCatalog implements Catalog{
     public int length;
-    public List<Item> items;
+    public LinkedList<Item> items;
     public boolean forInterest;
 
     public ItemCatalog() {
@@ -97,6 +97,19 @@ public class ItemCatalog implements Catalog{
             }
         }
         return null;
+    }
+
+    public ItemCatalog getRecent10() {
+        ItemCatalog recent10 = new ItemCatalog();
+        Iterator<Item> iterator = this.items.descendingIterator();
+
+        int i = 0;
+        while (iterator.hasNext() && i < 10) {
+            recent10.addItem(iterator.next());
+            i++;
+        }
+
+        return recent10;
     }
 
 

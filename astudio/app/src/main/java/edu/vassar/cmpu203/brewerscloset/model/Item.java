@@ -44,8 +44,8 @@ public class Item implements java.io.Serializable{
         if (seller != null) {
             this.sellerId = seller.id;}
         this.seller = seller;
-        this.interests = new ItemInterestCatalog(this);
         this.id = UUID.randomUUID().toString();
+        this.interests = new ItemInterestCatalog(this.id);
     }
     public void getSellerFromID(UserCatalog users) {
         this.seller = users.getItemFromID(this.sellerId);
@@ -84,6 +84,7 @@ public class Item implements java.io.Serializable{
         this.sellerId = seller.id;
         this.seller = seller;
     }
+    public Bitmap getPictures() { return this.pictures;}
 
     // convert bitmap -> blob
     public Blob getBlobFromBitmap(Bitmap bitmap) {
