@@ -22,8 +22,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsHolder>{
     //possibly make into list
     //but will need to make an interest holder and interest adapter
     Catalog items;
-    Boolean my_list;
-    Boolean toInterest;
+    boolean my_list;
+    boolean toInterest;
     IHomeFeedView.Listener listener;
 
     public ItemsAdapter(Context context, Catalog items, Boolean my_list, Boolean toInterest, IHomeFeedView.Listener listener) {
