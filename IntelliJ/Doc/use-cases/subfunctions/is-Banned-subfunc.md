@@ -5,9 +5,7 @@ start
 |System|
 if (item-valid?) then (Yes)
 : Display "Item Posted";
-elseif (fields-incomplete?) then (Yes)
-: Display : Display "Invalid Item: Please make sure all fields are filled";
-else (item-explicit?) 
+else (item-explicit?) then (Yes)
 : Display "Invalid Item: Please keep item clean";
 endif
 stop

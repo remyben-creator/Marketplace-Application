@@ -16,17 +16,18 @@ start
 :Opens the application;
 |System|
 while (account-info-complete-and-valid) is (no)
-if (account-info-incomplete) then (yes)
-:Display account info form;
-|User|
-:Inputs email, name, creates password;
-|System|
-else(no)
-:display "email or name could not be validated, please try again";
-endif 
+ if (account-info-incomplete) then (yes)
+  :Display account info form;
+  |User|
+  :Inputs email, name, creates password;
+  |System|
+ else(no)
+ :display "email or name could not be validated, please try again";
+ endif 
 endwhile(yes)
 |System|
 :Adds User to UserCatalog;
+:Displays "User Created";
 Stop
 @enduml
 ```

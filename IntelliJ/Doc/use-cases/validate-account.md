@@ -13,14 +13,16 @@
 start
 : Fills out account information page;
 |System|
-if (user-valid?) then (Yes)
-: Display "User Created";
-elseif (fields-incomplete?) then (Yes)
-: Display "Invalid User: Please make sure all fields are filled";
-elseif (invalid-email?) then (Yes)
-: Display "Invalid User: Please use vassar.edu email";
-else (Existing-User)
-: Display "Already account with this email";
+if (fields-incomplete?) then (Yes)
+ :Display "Invalid User: Please make sure all fields are filled";
+else (no)
+ if (user-valid?) then (Yes)
+  :Display "User Created";
+ elseif (invalid-email?) then (Yes)
+  :Display "Invalid User: Please use vassar.edu email";
+ else (Existing-User)
+  :Display "Already account with this email";
+ endif
 endif
 stop
 @enduml

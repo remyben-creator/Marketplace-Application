@@ -17,8 +17,10 @@ start
 |System|
 :Displays item interest form;
 |User|
-:Writes a comment;
+:fills out item interest form;
 |System|
+if (form-complete?) then (yes)
+:Adds item to itemInterestCatalog;
 :Adds interest to Item on database;
 stop
 @enduml

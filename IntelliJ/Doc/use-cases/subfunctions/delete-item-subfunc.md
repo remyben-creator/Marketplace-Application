@@ -2,7 +2,8 @@
 |System|
 start
 while (action-confirmed-and-item-present) is (yes)
-:Remove item ItemCatalog;
+:deleteItem(this.items, item);
+:removeItem(item);
 endwhile(no)
 Stop
 @enduml

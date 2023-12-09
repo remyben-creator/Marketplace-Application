@@ -15,3 +15,7 @@ and contact each other
 - Once the buyer and seller have negotiated and finished their
 in person sale process, the seller will consider the item "sold."
 - A sale in the context of our app will be once an item is de-listed or marked as "sold."
+
+### Explicit
+- An item is considered explicit if it appears in our databases banned strings list
+

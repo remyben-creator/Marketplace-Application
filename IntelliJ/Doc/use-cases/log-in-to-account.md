@@ -14,14 +14,16 @@
 start
 : Inputs email and password;
 |System|
-if (user-valid?) then (Yes)
-: Display "User Logged In";
-elseif (fields-incomplete?) then (Yes)
-: Display "Invalid User: Please make sure all fields are filled";
-else (invalid-password-or-username?)
-: Display "Invalid User: Check username and password";
+if (fields-incomplete?) then (Yes)
+:Display "Invalid User: Please make sure all fields are filled";
+else (No)
+ if (user-valid?) then (Yes)
+ :Display "User Logged In";
+ else (No)
+ :Display "Invalid User: Check username and password";
+ endif
 endif
-stop
+ stop
 
 @enduml
 ```

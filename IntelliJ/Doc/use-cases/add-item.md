@@ -28,7 +28,9 @@ else (no)
 endif
 endwhile (yes) 
 |System|
-:Lists Item on database;
+:Creates item;
+:Adds item to itemCatalog;
+:Displays "Item Posted";
 stop
 @enduml
 ```
