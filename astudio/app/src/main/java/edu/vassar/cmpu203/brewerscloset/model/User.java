@@ -47,7 +47,7 @@ public class User {
     }
 
     public Item createItem(String title, Double price, String description, Bitmap pictures, User seller) {
-        // for a user to create an item to be listed on the service
+        // for a user to create an item to be listed on the app
         Item item = new Item(title, price, description, pictures, this);
         this.myItems.addItem(item);
         return item;
