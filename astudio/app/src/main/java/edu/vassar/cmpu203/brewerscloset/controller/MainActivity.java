@@ -161,6 +161,9 @@ public class MainActivity extends AppCompatActivity
             this.mainView.displayFragment(new HomeFeedFragment(this, this.items), false, "home feed");
         }
     }
+    public Boolean useModerator(String itemTitleStr, String itemDescStr) {
+        return Moderator.isBannedItem(itemTitleStr, itemDescStr);
+    }
     public void uponPost(Item item, String itemTitle, Double itemPrice, String itemDesc, Bitmap itemPics, boolean edit) {
         if (edit) {
             this.user.editItem(item, itemTitle, itemPrice, itemDesc, itemPics);

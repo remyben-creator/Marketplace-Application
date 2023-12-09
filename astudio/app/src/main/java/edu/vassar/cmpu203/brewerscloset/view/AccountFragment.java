@@ -46,7 +46,6 @@ public class AccountFragment extends Fragment implements IAccountView{
         this.binding.backButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "Back To Home Feed", Snackbar.LENGTH_LONG).show();
                 AccountFragment.this.listener.uponBackToHome(false);
             }
         });

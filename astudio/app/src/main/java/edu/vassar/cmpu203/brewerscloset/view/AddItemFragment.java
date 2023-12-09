@@ -65,7 +65,6 @@ public class AddItemFragment extends Fragment implements IAddItemView{
         this.binding.backButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "Back To Home Feed", Snackbar.LENGTH_LONG).show();
                 AddItemFragment.this.listener.uponBackToHome(edit);
             }
         });
@@ -105,7 +104,7 @@ public class AddItemFragment extends Fragment implements IAddItemView{
                     return;
                 }
 
-                if (Moderator.isBannedItem(itemTitleStr, itemDescStr) == true) {
+                if (AddItemFragment.this.listener.useModerator(itemTitleStr, itemDescStr)) {
                     Snackbar.make(v, "Invalid Item: Please keep item clean", Snackbar.LENGTH_LONG).show();
                     return;
                 }
