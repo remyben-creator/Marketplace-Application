@@ -10,10 +10,9 @@ import com.google.firebase.firestore.Blob;
 import java.io.ByteArrayOutputStream;
 import java.text.DecimalFormat;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 
 /**
  * Represents a single item
