@@ -1,59 +1,105 @@
 package edu.vassar.cmpu203.brewerscloset.tests;
-import org.junit.Assert;
-import org.junit.Test; // for the @Test annotation
+
+import static org.junit.Assert.*;
+//import static org.junit.Assert.assertFalse;
+//import static org.junit.Assert.assertNull;
+//import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import java.util.UUID;
 
 import edu.vassar.cmpu203.brewerscloset.model.Item;
 import edu.vassar.cmpu203.brewerscloset.model.ItemCatalog;
 
 public class ItemCatalogTest {
-    ItemCatalog c = new ItemCatalog();
-    Item i1  = new Item("lights", 9.99, "blue", "none" );
-    Item i2  = new Item("calculator", 99.99, "TI-84", "none" );
     @Test
+    //adding an item to the database
     public void testAddItem() {
-        c.addItem(i1);
-        Assert.assertEquals(1, c.length);
-        Assert.assertTrue(c.getList().contains(i1));
-    }
-    @Test
-    public void testRemoveItem() {
-        c.addItem(i1);
-        c.removeItem(i1);
-        Assert.assertEquals(0, c.length);
-        Assert.assertFalse(c.getList().contains(i1));
-    }
-    @Test
-    public void testGetItems() {
-        c.addItem(i1);
-        Assert.assertEquals(1, c.getList().size());
-        Assert.assertTrue(c.getList().contains(i1));
-        Assert.assertFalse(c.getList().contains(i2));
-    }
-    @Test 
-    public void testGetItem() {
-        c.addItem(i1);
-        c.addItem(i2);
-        Assert.assertEquals(i1, c.getItem(0));
-        Assert.assertEquals(i2, c.getItem(1));
-        Assert.assertNull(c.getItem(2));
-    }
-    @Test 
-    public void testSearchResult() {
+        ItemCatalog catalog = new ItemCatalog();
+        Item item = new Item("Test Item", 10.99, "Description", null, null);
 
-        c.addItem(i1);
-        c.addItem(i2);
-        ItemCatalog searchResult = c.searchResult("calculator");
-        Assert.assertEquals(1, searchResult.length);
-        Assert.assertFalse(searchResult.getList().contains(i1));
-        Assert.assertTrue(searchResult.getList().contains(i2));
+        catalog.addItem(item);
+
+        assertEquals(1, catalog.getLength());
+        assertTrue(catalog.getList().contains(item));
     }
-    @Test 
-    public void testMyItems() {
-        c.addItem(i1);
-        c.addItem(i2);
-        //ItemCatalog myItems = c.myItems("Default");
-        //Assert.assertEquals(2, myItems.length);
-        //Assert.assertTrue(myItems.getItems().contains(i1));
-        //Assert.assertTrue(myItems.getItems().contains(i2));
+
+    @Test
+    //removing an item from the database
+    public void testRemoveItem() {
+        ItemCatalog catalog = new ItemCatalog();
+        Item item = new Item("Test Item", 10.99, "Description", null, null);
+
+        catalog.addItem(item);
+        catalog.removeItem(item);
+
+        assertEquals(0, catalog.getLength());
+        assertFalse(catalog.getList().contains(item));
+    }
+
+    @Test
+    //getting a specific item from the database using it's index
+    public void testGetItem() {
+        ItemCatalog catalog = new ItemCatalog();
+        Item item1 = new Item("Test Item 1", 10.99, "Description 1", null, null);
+        Item item2 = new Item("Test Item 2", 20.99, "Description 2", null, null);
+
+        catalog.addItem(item1);
+        catalog.addItem(item2);
+
+        assertEquals(item1, catalog.getItem(0));
+        assertEquals(item2, catalog.getItem(1));
+    }
+
+    @Test
+    //searching for items
+    public void testSearchResult() {
+        ItemCatalog catalog = new ItemCatalog();
+        Item item1 = new Item("Test Item 1", 10.99, "Description 1", null, null);
+        Item item2 = new Item("Test Item 2", 20.99, "Description 2", null, null);
+        Item item3 = new Item("Another Item", 15.99, "Description 3", null, null);
+
+        catalog.addItem(item1);
+        catalog.addItem(item2);
+        catalog.addItem(item3);
+
+        ItemCatalog searchResult = catalog.searchResult("Test");
+
+        assertEquals(2, searchResult.getLength());
+        assertTrue(searchResult.getList().contains(item1));
+        assertTrue(searchResult.getList().contains(item2));
+        assertFalse(searchResult.getList().contains(item3));
+    }
+
+    @Test
+    //getting an item from the database using it's ID
+    public void testGetItemFromID() {
+        ItemCatalog catalog = new ItemCatalog();
+        Item item1 = new Item("Test Item 1", 10.99, "Description 1", null, null);
+        Item item2 = new Item("Test Item 2", 20.99, "Description 2", null, null);
+
+        catalog.addItem(item1);
+        catalog.addItem(item2);
+
+        assertEquals(item1, catalog.getItemFromID(item1.id));
+        assertEquals(item2, catalog.getItemFromID(item2.id));
+        assertNull(catalog.getItemFromID(UUID.randomUUID().toString()));
+    }
+
+    @Test
+    //getting the most recent 10 posted items to show when loading the app
+    public void testGetRecent10() {
+        ItemCatalog catalog = new ItemCatalog();
+        for (int i = 0; i < 15; i++) {
+            Item item = new Item("Test Item " + i, 10.99 * (i + 1), "Description " + i, null, null);
+            catalog.addItem(item);
+        }
+
+        ItemCatalog recent10 = catalog.getRecent10();
+
+        assertEquals(10, recent10.getLength());
+        assertEquals("Test Item 14", recent10.getItem(0).getTitle()); // Most recent item
+        assertEquals("Test Item 5", recent10.getItem(9).getTitle());  // 6th most recent item
     }
 }
