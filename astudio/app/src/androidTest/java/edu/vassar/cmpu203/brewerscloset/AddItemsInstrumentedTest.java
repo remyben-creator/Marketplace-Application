@@ -1,6 +1,5 @@
 package edu.vassar.cmpu203.brewerscloset;
 
-
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.action.ViewActions;
@@ -15,24 +14,21 @@ import org.junit.runner.RunWith;
 
 import edu.vassar.cmpu203.brewerscloset.controller.MainActivity;
 @RunWith(AndroidJUnit4.class)
-public class HomeFeedInstrumentedTest {
+public class AddItemsInstrumentedTest {
     // specify what activity to launch for test (it will be launched afresh everytime a test is run
     @org.junit.Rule
     public ActivityScenarioRule<MainActivity> activityRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void checkForAllButtons() {
-        Espresso.onView(ViewMatchers.withId(R.id.searchButton));
-        Espresso.onView(ViewMatchers.withId(R.id.accountButton));
-        Espresso.onView(ViewMatchers.withId(R.id.homeButton));
-        Espresso.onView(ViewMatchers.withId(R.id.myItemsAddButton));
-    }
-    @Test
-    public void checkMyItemsAddButton() {
+    public void testAddItemsPage() {
+        //move into the add items page
+        Espresso.onView(ViewMatchers.withId(R.id.myItemsAddButton))
+                .perform(ViewActions.click());
         Espresso.onView(ViewMatchers.withId(R.id.myItemsAddButton))
                 .perform(ViewActions.click());
 
-        Espresso.onView(ViewMatchers.withText("Add Item"));
+        //check we are there
+        Espresso.onView(ViewMatchers.withId(R.id.postButton));
     }
 }
